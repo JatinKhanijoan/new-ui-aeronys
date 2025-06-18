@@ -27,10 +27,13 @@ export function NavProjects({
             <SidebarMenu>
                 {projects.map((item) => (
                     <SidebarMenuItem key={item.name}>
-                        <SidebarMenuButton asChild>
+                        <SidebarMenuButton
+                            asChild
+                            className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:size-10"
+                        >
                             <a href={item.url}>
-                                <item.icon />
-                                <span>{item.name}</span>
+                                <item.icon className="size-4" />
+                                <span className="group-data-[collapsible=icon]:hidden">{item.name}</span>
                             </a>
                         </SidebarMenuButton>
                         <DropdownMenu>

@@ -58,10 +58,11 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
                 return "bg-gray-500"
         }
     }
+
     return (
         <div className="w-80 min-w-80 border-l bg-background animate-in slide-in-from-right duration-300 flex-shrink-0">
-            <div className="h-full p-2 pt-0 space-y-4 overflow-auto">
-                <div className="flex items-center justify-between pt-2">
+            <div className="h-full p-4 pt-0 space-y-4 overflow-auto">
+                <div className="flex items-center justify-between pt-4">
                     <h2 className="text-lg font-semibold">Calendar</h2>
                 </div>
 

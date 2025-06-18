@@ -18,7 +18,8 @@ import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
 import { NavUser } from "./nav-user"
 import { TeamSwitcher } from "./team-switcher"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "~/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, useSidebar } from "~/components/ui/sidebar"
+import { cn } from "~/lib/utils"
 
 // Sample data
 const data = {
@@ -143,9 +144,13 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const { state } = useSidebar()
     return (
         <Sidebar collapsible="icon" variant="floating" {...props}>
-            <SidebarHeader>
+            <SidebarHeader className={
+                cn(state === "collapsed" ?
+                    "flex items-center justify-center p-4" : "")
+            }>
                 <TeamSwitcher teams={data.teams} />
             </SidebarHeader>
             <SidebarContent>
