@@ -14,6 +14,7 @@ import {
     SidebarMenuSub,
     SidebarMenuSubButton,
     SidebarMenuSubItem,
+    useSidebar,
 } from "~/components/ui/sidebar"
 
 export interface NavItem {
@@ -37,16 +38,26 @@ export function UnifiedNav({
     items: NavItem[]
     groupLabel?: string
 }) {
+    const { state } = useSidebar()
+    const isCollapsed = state === "collapsed"
+
     const renderSingleItem = (item: NavItem) => (
         <SidebarMenuItem key={item.title}>
             <SidebarMenuButton
                 asChild
                 isActive={item.isSelected}
-                className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:size-10"
+                tooltip={isCollapsed ? item.title : undefined}
             >
                 <a href={item.path}>
-                    {item.icon && <item.icon className="size-4" />}
-                    <span className="group-data-[collapsible=icon]:hidden">{item.title}</span>
+                    {item.icon && (
+                        <item.icon
+                            className={`shrink-0 ${isCollapsed
+                                ? "size-5"
+                                : "size-4"
+                                }`}
+                        />
+                    )}
+                    <span>{item.title}</span>
                 </a>
             </SidebarMenuButton>
         </SidebarMenuItem>
@@ -57,18 +68,25 @@ export function UnifiedNav({
             <SidebarMenuButton
                 asChild
                 isActive={item.isSelected}
-                className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:size-10"
+                tooltip={isCollapsed ? item.title : undefined}
             >
                 <a href={item.path}>
-                    {item.icon && <item.icon className="size-4" />}
-                    <span className="group-data-[collapsible=icon]:hidden">{item.title}</span>
+                    {item.icon && (
+                        <item.icon
+                            className={`shrink-0 ${isCollapsed
+                                ? "size-5"
+                                : "size-4"
+                                }`}
+                        />
+                    )}
+                    <span>{item.title}</span>
                 </a>
             </SidebarMenuButton>
-            {item.items && item.items.length > 0 && (
+            {item.items && item.items.length > 0 && !isCollapsed && (
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <SidebarMenuAction showOnHover>
-                            <MoreHorizontal />
+                            <MoreHorizontal className="size-4" />
                             <span className="sr-only">More</span>
                         </SidebarMenuAction>
                     </DropdownMenuTrigger>
@@ -86,44 +104,64 @@ export function UnifiedNav({
         </SidebarMenuItem>
     )
 
-    const renderCollapsibleItem = (item: NavItem) => (
-        <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
-            <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
+    const renderCollapsibleItem = (item: NavItem) => {
+        if (isCollapsed) {
+            return (
+                <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
-                        tooltip={item.title}
+                        asChild
                         isActive={item.isSelected}
-                        className="group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:size-10"
+                        tooltip={item.title}
                     >
-                        {item.icon && <item.icon className="size-4" />}
-                        <span className="group-data-[collapsible=icon]:hidden">{item.title}</span>
-                        {item.items && item.items.length > 0 && (
-                            <ChevronRight className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 group-data-[collapsible=icon]:hidden" />
-                        )}
+                        <a href={item.path}>
+                            {item.icon && (
+                                <item.icon className="size-5 shrink-0" />
+                            )}
+                            <span>{item.title}</span>
+                        </a>
                     </SidebarMenuButton>
-                </CollapsibleTrigger>
-                {item.items && item.items.length > 0 && (
-                    <CollapsibleContent>
-                        <SidebarMenuSub>
-                            {item.items.map((subItem) => (
-                                <SidebarMenuSubItem key={subItem.title}>
-                                    <SidebarMenuSubButton asChild isActive={subItem.isSelected}>
-                                        <a href={subItem.path}>
-                                            <span>{subItem.title}</span>
-                                        </a>
-                                    </SidebarMenuSubButton>
-                                </SidebarMenuSubItem>
-                            ))}
-                        </SidebarMenuSub>
-                    </CollapsibleContent>
-                )}
-            </SidebarMenuItem>
-        </Collapsible>
-    )
+                </SidebarMenuItem>
+            )
+        }
+
+        return (
+            <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
+                <SidebarMenuItem>
+                    <CollapsibleTrigger asChild>
+                        <SidebarMenuButton
+                            tooltip={item.title}
+                            isActive={item.isSelected}
+                        >
+                            {item.icon && <item.icon className="size-4 shrink-0" />}
+                            <span>{item.title}</span>
+                            {item.items && item.items.length > 0 && (
+                                <ChevronRight className="ml-auto size-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                            )}
+                        </SidebarMenuButton>
+                    </CollapsibleTrigger>
+                    {item.items && item.items.length > 0 && (
+                        <CollapsibleContent>
+                            <SidebarMenuSub>
+                                {item.items.map((subItem) => (
+                                    <SidebarMenuSubItem key={subItem.title}>
+                                        <SidebarMenuSubButton asChild isActive={subItem.isSelected}>
+                                            <a href={subItem.path}>
+                                                <span>{subItem.title}</span>
+                                            </a>
+                                        </SidebarMenuSubButton>
+                                    </SidebarMenuSubItem>
+                                ))}
+                            </SidebarMenuSub>
+                        </CollapsibleContent>
+                    )}
+                </SidebarMenuItem>
+            </Collapsible>
+        )
+    }
 
     return (
-        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
-            <SidebarGroupLabel>{groupLabel}</SidebarGroupLabel>
+        <SidebarGroup>
+            {!isCollapsed && <SidebarGroupLabel>{groupLabel}</SidebarGroupLabel>}
             <SidebarMenu>
                 {items.map((item) => {
                     switch (item.type) {

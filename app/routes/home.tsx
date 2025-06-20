@@ -21,7 +21,7 @@ export default function Home() {
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-muted/20">
-        <AppSidebar />
+        <AppSidebar variant="inset" />
         <SidebarInset className="flex-1 min-w-0">
           <div className="flex flex-col min-h-screen w-full">
             <Header rightSidebarOpen={rightSidebarOpen} setRightSidebarOpen={setRightSidebarOpen} />

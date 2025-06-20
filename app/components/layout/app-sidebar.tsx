@@ -1,5 +1,6 @@
 import * as React from "react"
 import {
+    ArrowUpCircleIcon,
     AudioWaveform,
     BookOpen,
     Bot,
@@ -16,7 +17,7 @@ import { NavMain } from "./nav-main"
 import { NavProjects } from "./nav-projects"
 import { NavUser } from "./nav-user"
 import { TeamSwitcher } from "./team-switcher"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, useSidebar } from "~/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, useSidebar } from "~/components/ui/sidebar"
 import { cn } from "~/lib/utils"
 import { UnifiedNav } from "./unified-nav"
 import logo from "../../../public/aeronys-logo.png"
@@ -83,23 +84,26 @@ const data = {
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-    const { state } = useSidebar()
-    const [selectedItem, setSelectedItem] = React.useState<string | null>(null)
-    const theme = useTheme()
-
     return (
-        <Sidebar collapsible="icon" variant="floating" {...props}>
+        <Sidebar collapsible="icon" {...props}>
             <SidebarHeader>
-                <img src={logo} alt="" />
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton
+                            asChild
+                            className="data-[slot=sidebar-menu-button]:!p-1.5"
+                        >
+                            <img className="w-24 h-auto dark:hidden" src={logo} alt="" />
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
             </SidebarHeader>
             <SidebarContent>
-                <TeamSwitcher teams={data.teams} />
                 <UnifiedNav items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={data.user} />
             </SidebarFooter>
-            <SidebarRail />
         </Sidebar>
-    )
+    );
 }
