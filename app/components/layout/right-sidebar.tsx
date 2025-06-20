@@ -60,15 +60,15 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
     }
 
     return (
-        <div className="w-80 min-w-80 border-l bg-background animate-in slide-in-from-right duration-300 flex-shrink-0">
+        <div className="w-80 p-4 min-w-96 bg-background animate-in slide-in-from-right duration-300 flex-shrink-0">
             <div className="h-full p-4 pt-0 space-y-4 overflow-auto">
                 <div className="flex items-center justify-between pt-4">
                     <h2 className="text-lg font-semibold">Calendar</h2>
                 </div>
 
                 <Card className="shadow-sm">
-                    <CardContent className="p-3">
-                        <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border-0" />
+                    <CardContent className="p-3 flex items-center justify-center">
+                        <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border-0 scale-110" />
                     </CardContent>
                 </Card>
 

@@ -1,5 +1,3 @@
-"use client"
-
 import { Calendar } from "lucide-react"
 import { Button } from "~/components/ui/button"
 import { SidebarTrigger } from "~/components/ui/sidebar"
@@ -13,6 +11,7 @@ import {
 } from "~/components/ui/breadcrumb"
 import { Separator } from "~/components/ui/separator"
 import { cn } from "~/lib/utils"
+import ThemeToggleButton from "~/components/ui/theme-toggle-button"
 
 interface HeaderProps {
     rightSidebarOpen: boolean
@@ -47,6 +46,7 @@ export function Header({ rightSidebarOpen, setRightSidebarOpen }: HeaderProps) {
                     <Calendar className="h-4 w-4" />
                     <span className="sr-only">Toggle Calendar</span>
                 </Button>
+                <ThemeToggleButton variant="circle" start="center" />
             </header>
         </div>
     )

@@ -1,6 +1,4 @@
-"use client"
-
-import type * as React from "react"
+import * as React from "react"
 import {
     AudioWaveform,
     BookOpen,
@@ -20,9 +18,46 @@ import { NavUser } from "./nav-user"
 import { TeamSwitcher } from "./team-switcher"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail, useSidebar } from "~/components/ui/sidebar"
 import { cn } from "~/lib/utils"
+import { UnifiedNav } from "./unified-nav"
+import logo from "../../../public/aeronys-logo.png"
+import { useTheme } from "../ui/theme-provider"
 
-// Sample data
 const data = {
+    navMain: [
+        {
+            title: "Dashboard",
+            type: "single" as const,
+            path: "/",
+            icon: SquareTerminal,
+            isSelected: true,
+        },
+        {
+            title: "Organisation",
+            type: "collapsible" as const,
+            path: "/organisation",
+            icon: Settings2,
+            items: [
+                {
+                    title: "Settings",
+                    path: "/organisation/settings",
+                },
+                {
+                    title: "Billing",
+                    path: "/organisation/billing",
+                },
+                {
+                    title: "Logs",
+                    path: "/organisation/logs",
+                }
+            ],
+        },
+        {
+            title: "Aircraft",
+            type: "collapsible" as const,
+            path: "/aircraft",
+            icon: Map,
+        }
+    ],
     user: {
         name: "John Doe",
         email: "john@example.com",
@@ -45,117 +80,21 @@ const data = {
             plan: "Free",
         },
     ],
-    navMain: [
-        {
-            title: "Dashboard",
-            url: "#",
-            icon: SquareTerminal,
-            isActive: true,
-            items: [
-                {
-                    title: "Overview",
-                    url: "#",
-                },
-                {
-                    title: "Analytics",
-                    url: "#",
-                },
-                {
-                    title: "Reports",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Projects",
-            url: "#",
-            icon: Bot,
-            items: [
-                {
-                    title: "Active",
-                    url: "#",
-                },
-                {
-                    title: "Completed",
-                    url: "#",
-                },
-                {
-                    title: "Archived",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Documentation",
-            url: "#",
-            icon: BookOpen,
-            items: [
-                {
-                    title: "Introduction",
-                    url: "#",
-                },
-                {
-                    title: "Get Started",
-                    url: "#",
-                },
-                {
-                    title: "Tutorials",
-                    url: "#",
-                },
-            ],
-        },
-        {
-            title: "Settings",
-            url: "#",
-            icon: Settings2,
-            items: [
-                {
-                    title: "General",
-                    url: "#",
-                },
-                {
-                    title: "Team",
-                    url: "#",
-                },
-                {
-                    title: "Billing",
-                    url: "#",
-                },
-            ],
-        },
-    ],
-    projects: [
-        {
-            name: "Design System",
-            url: "#",
-            icon: Frame,
-        },
-        {
-            name: "Sales Dashboard",
-            url: "#",
-            icon: PieChart,
-        },
-        {
-            name: "Travel App",
-            url: "#",
-            icon: Map,
-        },
-    ],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const { state } = useSidebar()
+    const [selectedItem, setSelectedItem] = React.useState<string | null>(null)
+    const theme = useTheme()
+
     return (
         <Sidebar collapsible="icon" variant="floating" {...props}>
-            <SidebarHeader className={
-                cn(state === "collapsed" ?
-                    "flex items-center justify-center p-4" : "")
-            }>
-                <TeamSwitcher teams={data.teams} />
+            <SidebarHeader>
+                <img src={logo} alt="" />
             </SidebarHeader>
             <SidebarContent>
-                <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
+                <TeamSwitcher teams={data.teams} />
+                <UnifiedNav items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={data.user} />
