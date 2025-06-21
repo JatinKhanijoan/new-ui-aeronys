@@ -2,12 +2,13 @@
 
 import * as React from "react"
 import { Calendar } from "~/components/ui/calendar"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "~/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "~/components/ui/card"
 import { Badge } from "~/components/ui/badge"
 import { ScrollArea } from "~/components/ui/scroll-area"
 import { Separator } from "~/components/ui/separator"
-import { Clock, MapPin } from "lucide-react"
+import { CalendarIcon, Clock, MapPin } from "lucide-react"
 import { cn } from "~/lib/utils"
+import { Button } from "../ui/button"
 
 interface RightSidebarProps {
     open: boolean
@@ -72,46 +73,47 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
                     </CardContent>
                 </Card>
 
-                <Card className="shadow-sm">
-                    <CardHeader className="pb-3">
-                        <CardTitle className="text-base">Today's Events</CardTitle>
-                        <CardDescription>
-                            {new Date().toLocaleDateString("en-US", {
-                                weekday: "long",
-                                year: "numeric",
-                                month: "long",
-                                day: "numeric",
-                            })}
-                        </CardDescription>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <CalendarIcon className="h-5 w-5" />
+                            Today's Schedule
+                        </CardTitle>
+                        <CardDescription>Upcoming flights and bookings</CardDescription>
                     </CardHeader>
-                    <CardContent className="pt-0">
-                        <ScrollArea className="h-[300px]">
-                            <div className="space-y-3">
-                                {upcomingEvents.map((event, index) => (
-                                    <div
-                                        key={index}
-                                        className="flex items-start space-x-3 p-2 rounded-lg hover:bg-muted/50 transition-colors"
-                                    >
-                                        <div className={cn("w-2 h-2 rounded-full mt-2", getEventColor(event.type))} />
-                                        <div className="flex-1 space-y-1">
-                                            <p className="text-sm font-medium leading-none">{event.title}</p>
-                                            <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                                                <Clock className="w-3 h-3" />
-                                                <span>{event.time}</span>
-                                            </div>
-                                            <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                                                <MapPin className="w-3 h-3" />
-                                                <span>{event.location}</span>
-                                            </div>
-                                        </div>
-                                        <Badge variant="outline" className="text-xs">
-                                            {event.type}
-                                        </Badge>
-                                    </div>
-                                ))}
+                    <CardContent>
+                        <div className="space-y-4">
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="font-medium">PPL Training • G-ABCD</p>
+                                    <p className="text-sm text-muted-foreground">Alex Johnson with Instructor David</p>
+                                </div>
+                                <div className="text-sm font-medium">09:00 - 11:00</div>
                             </div>
-                        </ScrollArea>
+                            <Separator />
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="font-medium">Navigation Time • G-EFGH</p>
+                                    <p className="text-sm text-muted-foreground">Sarah Williams (Solo)</p>
+                                </div>
+                                <div className="text-sm font-medium">11:30 - 14:30</div>
+                            </div>
+                            <Separator />
+                            <div className="flex justify-between items-start">
+                                <div>
+                                    <p className="font-medium">Night Rating • G-IJKL</p>
+                                    <p className="text-sm text-muted-foreground">Michael Brown with Instructor Emma</p>
+                                </div>
+                                <div className="text-sm font-medium">19:00 - 21:00</div>
+                            </div>
+                        </div>
                     </CardContent>
+                    <CardFooter>
+                        <Button variant="outline" size="sm" className="w-full">
+                            <CalendarIcon className="mr-2 h-4 w-4" />
+                            View Full Schedule
+                        </Button>
+                    </CardFooter>
                 </Card>
 
                 <Card className="shadow-sm">

@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import { ThemeProvider } from "~/components/ui/theme-provider";
+import { ColorThemeProvider } from "./provider/ColorThemeProvicer";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,9 +48,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
       </head>
       <body className="h-full">
         <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-          {children}
-          <ScrollRestoration />
-          <Scripts />
+          <ColorThemeProvider defaultTheme="default" storageKey="ui-color-theme">
+            {children}
+            <ScrollRestoration />
+            <Scripts />
+          </ColorThemeProvider>
         </ThemeProvider>
       </body>
     </html>

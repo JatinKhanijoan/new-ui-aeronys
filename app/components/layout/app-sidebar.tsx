@@ -4,24 +4,25 @@ import {
     AudioWaveform,
     BookOpen,
     Bot,
+    Calendar,
+    CalendarClock,
     Command,
     Frame,
     GalleryVerticalEnd,
     Map,
     PieChart,
+    Plane,
+    Receipt,
     Settings2,
     SquareTerminal,
+    Tag,
+    User,
 } from "lucide-react"
 
-import { NavMain } from "./nav-main"
-import { NavProjects } from "./nav-projects"
 import { NavUser } from "./nav-user"
-import { TeamSwitcher } from "./team-switcher"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, useSidebar } from "~/components/ui/sidebar"
-import { cn } from "~/lib/utils"
 import { UnifiedNav } from "./unified-nav"
 import logo from "../../../public/aeronys-logo.png"
-import { useTheme } from "../ui/theme-provider"
 
 const data = {
     navMain: [
@@ -53,10 +54,102 @@ const data = {
             ],
         },
         {
+            title: "Calendar",
+            type: "single" as const,
+            path: "/calendar",
+            icon: Calendar,
+        },
+        {
+            title: "Booking",
+            type: "collapsible" as const,
+            path: "/booking",
+            icon: Bot,
+            items: [
+                {
+                    title: "New Booking",
+                    path: "/booking/new",
+                },
+                {
+                    title: "View Bookings",
+                    path: "/booking/view",
+                },
+                {
+                    title: "Pending Requests",
+                    path: "/booking/pending",
+                }
+            ],
+        },
+        {
             title: "Aircraft",
             type: "collapsible" as const,
             path: "/aircraft",
-            icon: Map,
+            icon: Plane,
+            items: [
+                {
+                    title: "Aircrafts",
+                    path: "/aircraft",
+                },
+                {
+                    title: "Defect",
+                    path: "/aircraft/defects",
+                }
+            ],
+        },
+        {
+            title: "Profile",
+            type: "single" as const,
+            path: "/profile",
+            icon: User,
+        },
+        {
+            title: "Courses",
+            type: "single" as const,
+            path: "/courses",
+            icon: BookOpen,
+        },
+        {
+            title: "Training Records",
+            type: "collapsible" as const,
+            path: "/training-records",
+            icon: Frame,
+            items: [
+                {
+                    title: "View Records",
+                    path: "/training-records/view",
+                },
+                {
+                    title: "Pending Requests",
+                    path: "/training-records/pending",
+                }
+            ],
+        },
+        {
+            title: "Invoicing",
+            type: "collapsible" as const,
+            path: "/invoicing",
+            icon: Receipt,
+            items: [
+                {
+                    title: "Invoices",
+                    path: "/invoicing/invoices",
+                },
+                {
+                    title: "Pending Requests",
+                    path: "/invoicing/pending",
+                }
+            ],
+        },
+        {
+            title: "Maintenance",
+            type: "single" as const,
+            path: "/maintenance",
+            icon: CalendarClock,
+        },
+        {
+            title: "coupon",
+            type: "single" as const,
+            path: "/coupon",
+            icon: Tag,
         }
     ],
     user: {

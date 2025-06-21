@@ -12,6 +12,7 @@ import {
 import { Separator } from "~/components/ui/separator"
 import { cn } from "~/lib/utils"
 import ThemeToggleButton from "~/components/ui/theme-toggle-button"
+import { ThemeDropdown } from "~/provider/ColorThemeDropdown"
 
 interface HeaderProps {
     rightSidebarOpen: boolean
@@ -37,16 +38,19 @@ export function Header({ rightSidebarOpen, setRightSidebarOpen }: HeaderProps) {
                         </BreadcrumbList>
                     </Breadcrumb>
                 </div>
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setRightSidebarOpen(!rightSidebarOpen)}
-                    className={cn("h-7 w-7 shrink-0 transition-colors", rightSidebarOpen ? "bg-muted" : "")}
-                >
-                    <Calendar className="h-4 w-4" />
-                    <span className="sr-only">Toggle Calendar</span>
-                </Button>
-                <ThemeToggleButton variant="circle" start="center" />
+                <div className="flex items-center gap-1">
+                    <ThemeDropdown />
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setRightSidebarOpen(!rightSidebarOpen)}
+                        className={cn("h-7 w-7 shrink-0 transition-colors", rightSidebarOpen ? "bg-muted" : "")}
+                    >
+                        <Calendar className="h-4 w-4" />
+                        <span className="sr-only">Toggle Calendar</span>
+                    </Button>
+                    <ThemeToggleButton variant="circle" start="center" />
+                </div>
             </header>
         </div>
     )
