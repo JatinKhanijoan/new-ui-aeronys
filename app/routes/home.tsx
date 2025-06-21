@@ -1,12 +1,12 @@
 import { AppSidebar } from "~/components/layout/app-sidebar"
 import { Header } from "~/components/layout/header"
-import { MainContent } from "~/components/layout/main-content"
 import { RightSidebar } from "~/components/layout/right-sidebar"
 import { SidebarInset } from "~/components/ui/sidebar"
 import { SidebarProvider } from "~/components/ui/sidebar"
 
 import type { Route } from "./+types/home"
 import { useState } from "react"
+import MainContent from "~/components/layout/main-content"
 
 export function meta({ }: Route.MetaArgs) {
   return [

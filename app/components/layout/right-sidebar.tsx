@@ -85,7 +85,7 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
                         <div className="space-y-4">
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <p className="font-medium">PPL Training • G-ABCD</p>
+                                    <p className="font-medium">PPL Training • G-BSVM</p>
                                     <p className="text-sm text-muted-foreground">Alex Johnson with Instructor David</p>
                                 </div>
                                 <div className="text-sm font-medium">09:00 - 11:00</div>
@@ -93,7 +93,7 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
                             <Separator />
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <p className="font-medium">Navigation Time • G-EFGH</p>
+                                    <p className="font-medium">Navigation Time • G-BTNH</p>
                                     <p className="text-sm text-muted-foreground">Sarah Williams (Solo)</p>
                                 </div>
                                 <div className="text-sm font-medium">11:30 - 14:30</div>
@@ -101,7 +101,7 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
                             <Separator />
                             <div className="flex justify-between items-start">
                                 <div>
-                                    <p className="font-medium">Night Rating • G-IJKL</p>
+                                    <p className="font-medium">Night Rating • G-ENNA</p>
                                     <p className="text-sm text-muted-foreground">Michael Brown with Instructor Emma</p>
                                 </div>
                                 <div className="text-sm font-medium">19:00 - 21:00</div>
@@ -118,11 +118,11 @@ export function RightSidebar({ open, onOpenChange }: RightSidebarProps) {
 
                 <Card className="shadow-sm">
                     <CardHeader className="pb-3">
-                        <CardTitle className="text-base">Quick Stats</CardTitle>
+                        <CardTitle className="text-base">Quick Booking Stats</CardTitle>
                     </CardHeader>
                     <CardContent className="pt-0 space-y-3">
                         <div className="flex justify-between items-center">
-                            <span className="text-sm text-muted-foreground">Events Today</span>
+                            <span className="text-sm text-muted-foreground">Today</span>
                             <Badge variant="secondary">4</Badge>
                         </div>
                         <Separator />
