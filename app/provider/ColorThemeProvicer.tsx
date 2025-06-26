@@ -381,7 +381,7 @@ export const themes = {
               `,
         },
     },
-    "modern-minimal": {
+    default : {
         name: "Modern Minimal",
         css: {
             light: `:root {
@@ -1064,7 +1064,7 @@ export const themes = {
 }`,
         },
     },
-    default: {
+    twitter: {
         name: "Twitter",
         css: {
             light: `:root {

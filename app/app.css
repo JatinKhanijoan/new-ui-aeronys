@@ -11,6 +11,7 @@
 html,
 body {
   @apply bg-white dark:bg-gray-950;
+  font-size: 18px;
 
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;

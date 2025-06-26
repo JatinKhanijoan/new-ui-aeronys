@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { ThemeProvider } from "~/components/ui/theme-provider";
 import { ColorThemeProvider } from "./provider/ColorThemeProvicer";
+import { DashboardForProvider } from "./provider/DashboardForProvider";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -47,13 +48,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
         />
       </head>
       <body className="h-full">
-        <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
-          <ColorThemeProvider defaultTheme="default" storageKey="ui-color-theme">
-            {children}
-            <ScrollRestoration />
-            <Scripts />
-          </ColorThemeProvider>
-        </ThemeProvider>
+        <DashboardForProvider>
+          <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+            <ColorThemeProvider defaultTheme="default" storageKey="ui-color-theme">
+              {children}
+              <ScrollRestoration />
+              <Scripts />
+            </ColorThemeProvider>
+          </ThemeProvider>
+        </DashboardForProvider>
       </body>
     </html>
   );

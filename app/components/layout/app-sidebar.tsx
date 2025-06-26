@@ -146,7 +146,7 @@ const data = {
             icon: CalendarClock,
         },
         {
-            title: "coupon",
+            title: "Coupon",
             type: "single" as const,
             path: "/coupon",
             icon: Tag,

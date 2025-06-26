@@ -1,6 +1,5 @@
 import { AppSidebar } from "~/components/layout/app-sidebar"
 import { Header } from "~/components/layout/header"
-import { RightSidebar } from "~/components/layout/right-sidebar"
 import { SidebarInset } from "~/components/ui/sidebar"
 import { SidebarProvider } from "~/components/ui/sidebar"
 
@@ -24,10 +23,9 @@ export default function Home() {
         <AppSidebar variant="inset" />
         <SidebarInset className="flex-1 min-w-0">
           <div className="flex flex-col min-h-screen w-full">
-            <Header rightSidebarOpen={rightSidebarOpen} setRightSidebarOpen={setRightSidebarOpen} />
+            <Header />
             <div className="flex flex-1 min-h-0">
-              <MainContent rightSidebarOpen={rightSidebarOpen} />
-              {rightSidebarOpen && <RightSidebar open={rightSidebarOpen} onOpenChange={setRightSidebarOpen} />}
+              <MainContent />
             </div>
           </div>
         </SidebarInset>
