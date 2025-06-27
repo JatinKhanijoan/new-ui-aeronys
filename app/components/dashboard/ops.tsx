@@ -342,7 +342,7 @@ const OpsDashboard = () => {
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Wrench className="h-5 w-5 text-primary" />
-                            Maintenance vs Booking Conflicts
+                            Maintenance & Booking Conflicts
                         </CardTitle>
                         <CardDescription>Scheduled maintenance that conflicts with bookings</CardDescription>
                     </CardHeader>

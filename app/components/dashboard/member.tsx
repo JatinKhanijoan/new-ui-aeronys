@@ -153,7 +153,7 @@ const MemberDashboard = () => {
                     <CardHeader>
                         <CardTitle className="flex items-center gap-2">
                             <Target className="h-5 w-5 text-primary" />
-                            Hours Completed vs. Course Requirements
+                            Hours Completed & Course Requirements
                         </CardTitle>
                         <CardDescription>Your training progress across all courses</CardDescription>
                     </CardHeader>
