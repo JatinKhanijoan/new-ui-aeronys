@@ -9,7 +9,7 @@ import {
     DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
 
-type UserRole = "admin" | "member" | "non-member" | "instructor" | "restricted-instructor" | "ops" | "cfa";
+type UserRole = "admin" | "member" | "non-member" | "instructor" | "restricted-instructor" | "ops" | "cfi";
 
 const roleNames: Record<UserRole, string> = {
     "admin": "Admin",
@@ -17,8 +17,8 @@ const roleNames: Record<UserRole, string> = {
     "non-member": "Non-Member",
     "instructor": "Instructor",
     "restricted-instructor": "Restricted Instructor",
-    "ops": "Operations",
-    "cfa": "CFA"
+    "ops": "Operations",    
+    "cfi": "CFI"
 };
 
 export function DashboardForDropdown() {

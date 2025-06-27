@@ -12,6 +12,9 @@ import "./app.css";
 import { ThemeProvider } from "~/components/ui/theme-provider";
 import { ColorThemeProvider } from "./provider/ColorThemeProvicer";
 import { DashboardForProvider } from "./provider/DashboardForProvider";
+import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
+import { AppSidebar } from "./components/layout/app-sidebar";
+import { Header } from "./components/layout/header";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -51,7 +54,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <DashboardForProvider>
           <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
             <ColorThemeProvider defaultTheme="default" storageKey="ui-color-theme">
-              {children}
+              <SidebarProvider>
+                <div className="flex min-h-screen w-full bg-muted/20">
+                  <AppSidebar variant="inset" />
+                  <SidebarInset className="flex-1 min-w-0">
+                    <div className="flex flex-col min-h-screen w-full">
+                      <Header />
+                      <div className="flex flex-1 min-h-0">
+                        {children}
+                      </div>
+                    </div>
+                  </SidebarInset>
+                </div>
+              </SidebarProvider>
               <ScrollRestoration />
               <Scripts />
             </ColorThemeProvider>

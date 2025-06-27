@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
 
-type UserRole = "admin" | "member" | "non-member" | "instructor" | "restricted-instructor" | "ops" | "cfa";
+type UserRole = "admin" | "member" | "non-member" | "instructor" | "restricted-instructor" | "ops" | "cfi";
 
 interface DashboardForContextType {
     userRole: UserRole;

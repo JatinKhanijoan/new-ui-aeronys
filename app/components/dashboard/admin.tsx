@@ -14,6 +14,7 @@ import {
     Activity,
     DollarSign,
     Plane,
+    Zap,
 } from 'lucide-react'
 import {
     LineChart,
@@ -46,34 +47,33 @@ const weeklyInvoiceData = [
 ]
 
 const studentProgressData = [
-    { student: 'Alex Johnson', totalHours: 45.2, soloHours: 12.5, dualHours: 32.7, progress: 68, course: 'PPL(A)' },
-    { student: 'Sarah Mitchell', totalHours: 28.8, soloHours: 5.2, dualHours: 23.6, progress: 42, course: 'PPL(A)' },
-    { student: 'Mike Chen', totalHours: 62.1, soloHours: 28.3, dualHours: 33.8, progress: 85, course: 'CPL' },
-    { student: 'Emma Davis', totalHours: 15.7, soloHours: 0, dualHours: 15.7, progress: 24, course: 'PPL(A)' },
-    { student: 'Tom Wilson', totalHours: 38.4, soloHours: 8.1, dualHours: 30.3, progress: 58, course: 'PPL(A)' },
+    { student: 'Leia Skywalker', totalHours: 45.2, soloHours: 12.5, dualHours: 32.7, progress: 68, course: 'PPL(A)' },
+    { student: 'Obi Wan', totalHours: 28.8, soloHours: 5.2, dualHours: 23.6, progress: 42, course: 'PPL(A)' },
+    { student: 'Anakin Skywalker', totalHours: 15.7, soloHours: 0, dualHours: 15.7, progress: 24, course: 'PPL(A)' },
+    { student: 'Luke Skywalker', totalHours: 38.4, soloHours: 8.1, dualHours: 30.3, progress: 58, course: 'PPL(A)' },
 ]
 
 const aircraftUtilizationData = [
-    { aircraft: 'G-BSVM', thisWeek: 18.5, lastWeek: 22.1, bookings: 12, revenue: 4200 },
-    { aircraft: 'G-BTNH', thisWeek: 15.2, lastWeek: 18.7, bookings: 9, revenue: 3400 },
-    { aircraft: 'G-ENNA', thisWeek: 12.8, lastWeek: 14.3, bookings: 8, revenue: 2900 },
-    { aircraft: 'G-BTID', thisWeek: 8.4, lastWeek: 11.2, bookings: 5, revenue: 1900 },
+    { aircraft: 'G-BSVM', thisWeek: 18.5, lastWeek: 22.1, bookings: 12 },
+    { aircraft: 'G-BTNH', thisWeek: 15.2, lastWeek: 18.7, bookings: 9 },
+    { aircraft: 'G-ENNA', thisWeek: 12.8, lastWeek: 14.3, bookings: 8 },
+    { aircraft: 'G-BTID', thisWeek: 8.4, lastWeek: 11.2, bookings: 5 },
 ]
 
 const instructorPerformanceData = [
-    { instructor: 'John Smith', students: 8, avgFlightTime: 1.8, satisfaction: 4.8, weeklyHours: 24.5 },
-    { instructor: 'Lisa Brown', students: 6, avgFlightTime: 2.1, satisfaction: 4.9, weeklyHours: 18.2 },
-    { instructor: 'Dave Wilson', students: 5, avgFlightTime: 1.6, satisfaction: 4.7, weeklyHours: 15.8 },
-    { instructor: 'Kate Johnson', students: 7, avgFlightTime: 1.9, satisfaction: 4.6, weeklyHours: 21.3 },
+    { instructor: 'Luke Skywalker', students: 8, weeklyHours: 24.5 },
+    { instructor: 'Leia Skywalker', students: 6, weeklyHours: 18.2 },
+    { instructor: 'Obi Wan', students: 5, weeklyHours: 15.8 },
+    { instructor: 'Anakin Skywalker', students: 7, weeklyHours: 21.3 },
 ]
 
 const maintenanceData = [
-    { aircraft: 'G-ABCD', type: 'Next 50hr check', remaining: 12.5, total: 50, status: 'warning', progress: 75 },
-    { aircraft: 'G-EFGH', type: 'Annual inspection', remaining: 5, total: 365, status: 'critical', progress: 98 },
-    { aircraft: 'G-IJKL', type: 'Engine hours', remaining: 342, total: 1200, status: 'ok', progress: 28 },
+    { aircraft: 'G-ABCD', type: '5 day check', remaining: 1, total: 50, status: 'critical', progress: 80 },
+    { aircraft: 'G-EFGH', type: 'Annual check', remaining: 5, total: 365, status: 'critical', progress: 98 },
+    { aircraft: 'G-IJKL', type: 'ARC Renewal', remaining: 56, total: 1200, status: 'ok', progress: 28 },
 ]
 
-const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
+const AdminDashboard = () => {
     const cn = (...classes: (string | boolean | undefined)[]): string =>
         classes.filter(Boolean).join(' ')
 
@@ -81,9 +81,20 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
         <div
             className={cn(
                 "flex-1 w-full p-4 pt-0 space-y-6 transition-all duration-300 ease-in-out overflow-auto",
-                rightSidebarOpen ? "pr-0" : "pr-4",
             )}
         >
+            <div className="flex p-2 items-center justify-between">
+                <div>
+                    <h1 className="text-2xl font-bold tracking-tight">Welcome back, Admin</h1>
+                    <p className="text-muted-foreground">Here's what's happening at your flight school today.</p>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Badge variant="outline" className="text-xs flex items-center gap-1">
+                        <Calendar className="h-3 w-3" />
+                        {new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                    </Badge>
+                </div>
+            </div>
             {/* Invoice & Revenue Tracking */}
             <Card>
                 <CardHeader>
@@ -209,7 +220,7 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                             <Plane className="h-5 w-5 text-primary" />
                             Aircraft Performance
                         </CardTitle>
-                        <CardDescription>Weekly utilization and revenue per aircraft</CardDescription>
+                        <CardDescription>Weekly utilization per aircraft</CardDescription>
                     </CardHeader>
                     <CardContent>
                         <div className="h-64">
@@ -225,14 +236,6 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                                     />
                                     <YAxis
                                         yAxisId="hours"
-                                        stroke="var(--color-muted-foreground)"
-                                        fontSize={12}
-                                        tickLine={false}
-                                        axisLine={false}
-                                    />
-                                    <YAxis
-                                        yAxisId="revenue"
-                                        orientation="right"
                                         stroke="var(--color-muted-foreground)"
                                         fontSize={12}
                                         tickLine={false}
@@ -261,15 +264,6 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                                         name="Last Week (hrs)"
                                         opacity={0.6}
                                     />
-                                    <Line
-                                        yAxisId="revenue"
-                                        type="monotone"
-                                        dataKey="revenue"
-                                        stroke="var(--color-chart-3)"
-                                        strokeWidth={3}
-                                        dot={{ fill: 'var(--color-chart-3)', strokeWidth: 2, r: 4 }}
-                                        name="Revenue (£)"
-                                    />
                                 </ComposedChart>
                             </ResponsiveContainer>
                         </div>
@@ -293,8 +287,8 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                                 <div className="space-y-3">
                                     <div className="flex items-center justify-between">
                                         <h4 className="font-medium">{instructor.instructor}</h4>
-                                        <Badge variant="outline" className="text-xs">
-                                            ★ {instructor.satisfaction}
+                                        <Badge variant={'outline'}>
+                                            Instructor
                                         </Badge>
                                     </div>
                                     <div className="space-y-2 text-sm">
@@ -305,10 +299,6 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                                         <div className="flex justify-between">
                                             <span className="text-muted-foreground">Weekly Hours:</span>
                                             <span className="font-medium">{instructor.weeklyHours}h</span>
-                                        </div>
-                                        <div className="flex justify-between">
-                                            <span className="text-muted-foreground">Avg Flight:</span>
-                                            <span className="font-medium">{instructor.avgFlightTime}h</span>
                                         </div>
                                     </div>
                                 </div>
@@ -362,7 +352,7 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                                             )}
                                         />
                                         <p className="text-xs text-muted-foreground">
-                                            {maintenance.remaining} {maintenance.status === 'critical' ? 'days' : 'hours'} remaining
+                                            {maintenance.remaining} {maintenance.status === 'critical' ? 'day(s)' : 'hour(s)'} remaining
                                         </p>
                                     </div>
                                 </div>
@@ -375,6 +365,24 @@ const AdminDashboard = ({ rightSidebarOpen }: MainContentProps) => {
                             View Full Maintenance Schedule
                         </Button>
                     </CardFooter>
+                </Card>
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="flex items-center gap-2">
+                            <Zap className="h-5 w-5 text-primary" />
+                            Quick Actions
+                        </CardTitle>
+                        <CardDescription></CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                        <div className='grid gap-4'>
+                            <Button>New Booking</Button>
+                            <Button>View Training Records</Button>
+                            <Button>View Invoices</Button>
+                            <Button>Create Custom Invoice</Button>
+                            <Button>New User</Button>
+                        </div>
+                    </CardContent>
                 </Card>
             </div>
         </div>
