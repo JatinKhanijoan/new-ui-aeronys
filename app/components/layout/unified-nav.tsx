@@ -1,6 +1,7 @@
 "use client"
 
 import { ChevronRight, MoreHorizontal, type LucideIcon } from "lucide-react"
+import { NavLink } from "react-router"
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "~/components/ui/collapsible"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "~/components/ui/dropdown-menu"
@@ -23,11 +24,9 @@ export interface NavItem {
     path: string
     icon?: LucideIcon
     isActive?: boolean
-    isSelected?: boolean
     items?: {
         title: string
         path: string
-        isSelected?: boolean
     }[]
 }
 
@@ -45,10 +44,12 @@ export function UnifiedNav({
         <SidebarMenuItem key={item.title}>
             <SidebarMenuButton
                 asChild
-                isActive={item.isSelected}
                 tooltip={isCollapsed ? item.title : undefined}
             >
-                <a href={item.path}>
+                <NavLink
+                    to={item.path}
+                    className={({ isActive }) => isActive ? "font-medium" : ""}
+                >
                     {item.icon && (
                         <item.icon
                             className={`shrink-0 ${isCollapsed
@@ -58,7 +59,7 @@ export function UnifiedNav({
                         />
                     )}
                     <span>{item.title}</span>
-                </a>
+                </NavLink>
             </SidebarMenuButton>
         </SidebarMenuItem>
     )
@@ -67,10 +68,12 @@ export function UnifiedNav({
         <SidebarMenuItem key={item.title}>
             <SidebarMenuButton
                 asChild
-                isActive={item.isSelected}
                 tooltip={isCollapsed ? item.title : undefined}
             >
-                <a href={item.path}>
+                <NavLink
+                    to={item.path}
+                    className={({ isActive }) => isActive ? "font-medium" : ""}
+                >
                     {item.icon && (
                         <item.icon
                             className={`shrink-0 ${isCollapsed
@@ -80,7 +83,7 @@ export function UnifiedNav({
                         />
                     )}
                     <span>{item.title}</span>
-                </a>
+                </NavLink>
             </SidebarMenuButton>
             {item.items && item.items.length > 0 && !isCollapsed && (
                 <DropdownMenu>
@@ -93,9 +96,14 @@ export function UnifiedNav({
                     <DropdownMenuContent className="w-48 rounded-lg" side="bottom" align="end">
                         {item.items.map((subItem) => (
                             <DropdownMenuItem key={subItem.title} asChild>
-                                <a href={subItem.path} className={subItem.isSelected ? "bg-accent" : ""}>
+                                <NavLink
+                                    to={subItem.path}
+                                    className={({ isActive }) =>
+                                        isActive ? "bg-accent font-medium" : ""
+                                    }
+                                >
                                     <span>{subItem.title}</span>
-                                </a>
+                                </NavLink>
                             </DropdownMenuItem>
                         ))}
                     </DropdownMenuContent>
@@ -110,15 +118,17 @@ export function UnifiedNav({
                 <SidebarMenuItem key={item.title}>
                     <SidebarMenuButton
                         asChild
-                        isActive={item.isSelected}
                         tooltip={item.title}
                     >
-                        <a href={item.path}>
+                        <NavLink
+                            to={item.path}
+                            className={({ isActive }) => isActive ? "font-medium" : ""}
+                        >
                             {item.icon && (
                                 <item.icon className="size-5 shrink-0" />
                             )}
                             <span>{item.title}</span>
-                        </a>
+                        </NavLink>
                     </SidebarMenuButton>
                 </SidebarMenuItem>
             )
@@ -128,10 +138,7 @@ export function UnifiedNav({
             <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
                 <SidebarMenuItem>
                     <CollapsibleTrigger asChild>
-                        <SidebarMenuButton
-                            tooltip={item.title}
-                            isActive={item.isSelected}
-                        >
+                        <SidebarMenuButton tooltip={item.title}>
                             {item.icon && <item.icon className="size-4 shrink-0" />}
                             <span>{item.title}</span>
                             {item.items && item.items.length > 0 && (
@@ -144,10 +151,15 @@ export function UnifiedNav({
                             <SidebarMenuSub>
                                 {item.items.map((subItem) => (
                                     <SidebarMenuSubItem key={subItem.title}>
-                                        <SidebarMenuSubButton asChild isActive={subItem.isSelected}>
-                                            <a href={subItem.path}>
+                                        <SidebarMenuSubButton asChild>
+                                            <NavLink
+                                                to={subItem.path}
+                                                className={({ isActive }) =>
+                                                    isActive ? "font-medium" : ""
+                                                }
+                                            >
                                                 <span>{subItem.title}</span>
-                                            </a>
+                                            </NavLink>
                                         </SidebarMenuSubButton>
                                     </SidebarMenuSubItem>
                                 ))}

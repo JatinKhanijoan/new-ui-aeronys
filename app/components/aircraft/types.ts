@@ -1,0 +1,37 @@
+export interface Aircraft {
+    aircraft_id: string;
+    registration_number: string;
+    type: string;
+    active_status: boolean | null;
+    billing_rate: string | null | undefined;
+    hire_rate: string;
+    max_takeoff_weight: string;
+    empty_weight: string;
+    empty_weight_level_arm: string | null;
+    row1_seats_level_arm: string | null;
+    row2_seats_level_arm: string | null;
+    row3_seats_level_arm: string | null;
+    row4_seats_level_arm: string | null;
+    baggage_forward_level_arm: string | null;
+    baggage_rear_level_arm: string | null;
+    fuel_level_arm: string | null;
+    fuel_consumption: string | null;
+    fuel_capacity: string | null;
+    envelope_forward_limit: string | null;
+    envelope_forward_limit_max_weight: string | null;
+    max_weight_aft_limit: string | null;
+    envelope_max_weight_aft_limit_min_weight: string | null;
+    envelope_empty_weight_aft_limit: string | null;
+    image_address: string | null;
+    minimum_charge_time: string | null;
+    landing_charge: string | null;
+    tgl_charge: string | null;
+    approach_charge: string | null;
+    hours_account_factor: string | null;
+    time_adjust: string | null;
+    company_name: string | null;
+    model_name: string | null;
+    organisation_id: string[];
+    files_url: string[] | null;
+    billing_id: string | null;
+}

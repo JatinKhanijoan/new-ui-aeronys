@@ -14,8 +14,12 @@ import { cn } from "~/lib/utils"
 import ThemeToggleButton from "~/components/ui/theme-toggle-button"
 import { ThemeDropdown } from "~/provider/ColorThemeDropdown"
 import { DashboardForDropdown } from "~/provider/DashboardForDropdown"
+import { useLocation, useParams } from "react-router"
 
 export function Header() {
+    const location = useLocation();
+    const title = location.pathname.split("/")[1]?.charAt(0).toUpperCase() + location.pathname.split("/")[1]?.slice(1).toLowerCase()
+
     return (
         <div className="w-full p-4">
             <header className="flex h-14 w-full shrink-0 items-center gap-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 rounded-lg border shadow-sm transition-all duration-300 ease-linear">
@@ -25,11 +29,7 @@ export function Header() {
                     <Breadcrumb className="min-w-0">
                         <BreadcrumbList>
                             <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator className="hidden md:block" />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage>Overview</BreadcrumbPage>
+                                <BreadcrumbLink href={location.pathname}>{title}</BreadcrumbLink>
                             </BreadcrumbItem>
                         </BreadcrumbList>
                     </Breadcrumb>
@@ -37,7 +37,7 @@ export function Header() {
                 <div className="flex items-center gap-1">
                     <DashboardForDropdown />
                     <ThemeDropdown />
-                    <ThemeToggleButton variant="circle" start="center" />
+                    <ThemeToggleButton variant="circle" start="top-right" />
                 </div>
             </header>
         </div>
