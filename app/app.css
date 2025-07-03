@@ -73,6 +73,24 @@ body {
 }
 
 @layer base {
+  :where(.fc) .fc-scrollgrid-section-header th {
+    background: var(--primary) !important;
+    color: var(--primary-foreground) !important;
+  }
+}
+
+@layer base {
+  :where(.fc) .fc-toolbar .fc-button {
+    background-color: var(--primary) !important;
+    color: white !important;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+  }
+}
+
+@layer base {
   * {
     @apply border-border outline-ring/50;
   }
