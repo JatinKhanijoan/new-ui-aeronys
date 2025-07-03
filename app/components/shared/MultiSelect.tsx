@@ -40,8 +40,23 @@ export default function MultiSelect({
     const [open, setOpen] = React.useState(false);
     const [selected, setSelected] = React.useState<Option[]>([]);
     const [inputValue, setInputValue] = React.useState("");
+    const [isInitializing, setIsInitializing] = React.useState(true);
 
-    // Initialize selected options based on defaultValues
+    useEffect(() => {
+        if (defaultValues.length > 0 && options.length > 0) {
+            const defaultOptions = options.filter(option =>
+                defaultValues.includes(option.value)
+            );
+            setSelected(defaultOptions);
+        }
+        const timer = setTimeout(() => {
+            setIsInitializing(false);
+        }, 200);
+
+        return () => clearTimeout(timer);
+    }, [defaultValues, options]);
+
+
     useEffect(() => {
         if (defaultValues.length > 0 && options.length > 0) {
             const defaultOptions = options.filter(option =>
@@ -51,7 +66,6 @@ export default function MultiSelect({
         }
     }, [defaultValues, options]);
 
-    // Call onChange whenever selected items change
     useEffect(() => {
         const selectedUuids = selected.map(item => item.value);
         onChange?.(selectedUuids);
@@ -89,7 +103,6 @@ export default function MultiSelect({
         setInputValue("");
     }, [selected, disabled, maxSelections]);
 
-    // Filter options: exclude already selected and match search input
     const filteredOptions = useMemo(() => {
         return options.filter((option) => {
             const isNotSelected = !selected.some(s => s.value === option.value);
@@ -105,7 +118,6 @@ export default function MultiSelect({
 
     return (
         <div className={`w-full ${className}`}>
-            {/* Hidden input for form submission */}
             {name && (
                 <input
                     type="hidden"
@@ -114,20 +126,19 @@ export default function MultiSelect({
                 />
             )}
 
-            <Command className="overflow-visible">
-                <div className={`rounded-md border border-input px-3 py-2 text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${disabled ? 'opacity-50 cursor-not-allowed bg-muted' : ''
-                    }`}>
-                    <div className="flex flex-wrap gap-1">
+            <Command className="overflow-visible bg-transparent">
+                <div className={`group relative rounded-md border border-input bg-background text-sm ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ${disabled ? 'opacity-50 cursor-not-allowed bg-muted' : ''}`}>
+                    <div className="flex min-h-10 flex-wrap items-center gap-1 px-3 py-2">
                         {selected.map((option) => (
                             <Badge
                                 key={option.value}
                                 variant="secondary"
-                                className="select-none"
+                                className="select-none cursor-pointer"
+                                onClick={() => handleUnselect(option)}
                             >
                                 {option.label}
                                 <X
-                                    className="size-4 text-muted-foreground hover:text-foreground ml-2 cursor-pointer"
-                                    onClick={() => handleUnselect(option)}
+                                    className="size-4 hover:scale-110 text-muted-foreground hover:text-foreground ml-2 cursor-pointer"
                                 />
                             </Badge>
                         ))}
@@ -138,7 +149,11 @@ export default function MultiSelect({
                             onValueChange={setInputValue}
                             value={inputValue}
                             onBlur={() => setOpen(false)}
-                            onFocus={() => !disabled && setOpen(true)}
+                            onFocus={() => {
+                                if (!disabled && !isInitializing) {
+                                    setOpen(true);
+                                }
+                            }}
                             placeholder={
                                 selected.length === 0
                                     ? placeholder
@@ -146,11 +161,10 @@ export default function MultiSelect({
                                         ? ``
                                         : "Add more..."
                             }
-                            className="ml-2 flex-1 bg-transparent outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed"
+                            className="flex-1 bg-transparent outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed p-0 h-auto border-none focus:ring-0 focus-visible:ring-0 focus-visible:ring-offset-0"
                         />
                     </div>
                 </div>
-
                 <div className="relative mt-2">
                     <CommandList>
                         {open && !disabled && filteredOptions.length > 0 && (

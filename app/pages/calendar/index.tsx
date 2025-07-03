@@ -150,7 +150,7 @@ const CalendarPage = () => {
     });
 
     return (
-        <div className="container mx-auto p-6 h-[500vh]">
+        <div className="container mx-auto p-6 h-[200vh]">
             <PageTitle
                 title="Calendar"
                 description="View and manage flight schedules."

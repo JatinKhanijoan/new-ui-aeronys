@@ -305,7 +305,7 @@ const ResourceTimelineCalendar: React.FC<ResourceTimelineCalendarProps> = ({
             </div>
 
             <div className="border rounded-lg shadow-sm p-3">
-                <div className="text-sm font-semibold mb-2 text-primary">Booking</div>
+                <div className="text-sm font-semibold mb-4 text-primary">LEGEND</div>
                 <div className="flex flex-wrap gap-3">
                     {Object.entries(BookingTypes).map(([code, type]) => (
                         <div key={code} className="flex items-center gap-2">
@@ -315,7 +315,7 @@ const ResourceTimelineCalendar: React.FC<ResourceTimelineCalendarProps> = ({
                             >
                                 {code}
                             </span>
-                            <span className="text-xs">
+                            <span className="text-md font-medium">
                                 {BookingTypeLabels[type as keyof typeof BookingTypeLabels]}
                             </span>
                         </div>

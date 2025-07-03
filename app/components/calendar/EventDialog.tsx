@@ -8,8 +8,15 @@ import {
 } from '~/components/ui/dialog';
 import { Button } from '../ui/button';
 import { Label } from '../ui/label';
+import { Calendar } from '../ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
+import { ScrollArea } from '../ui/scroll-area';
+import { CalendarIcon } from 'lucide-react';
+import { format } from 'date-fns';
+import { useState } from 'react';
+import { cn } from '~/lib/utils';
 import MultiSelect from '../shared/MultiSelect';
-import { Select } from '../ui/select';
 
 interface EventDetailsDialogProps {
     isOpen: boolean;
@@ -26,6 +33,40 @@ const bookingTypes = [
     { value: "private-hire", label: "Private Hire" }
 ];
 
+const formatUTCDateTime = (dateString: string): string => {
+    const date = new Date(dateString);
+    const options: Intl.DateTimeFormatOptions = {
+        timeZone: 'UTC',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: false
+    };
+    return new Intl.DateTimeFormat('en-US', options).format(date);
+};
+
+const parseDateTimeStringUTC = (dateTimeString: string): { date: Date; time: string } => {
+    const date = new Date(dateTimeString);
+
+    // Extract UTC components to avoid timezone conversion
+    const year = date.getUTCFullYear();
+    const month = date.getUTCMonth();
+    const day = date.getUTCDate();
+    const hours = date.getUTCHours();
+    const minutes = date.getUTCMinutes();
+
+    // Create a new date object with UTC components
+    const utcDate = new Date(Date.UTC(year, month, day, hours, minutes));
+    const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+    return {
+        date: utcDate,
+        time: timeString
+    };
+};
+
 const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
     isOpen,
     onClose,
@@ -34,11 +75,82 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
 }) => {
     if (!eventData || !completeBookingData) return null;
 
-    // get course name
-    const getCourseName = (courseId: string | null) => {
-        if (!courseId) return 'No Course';
-        const course = courseResponse.courses.find(c => c.course_id === courseId);
-        return course ? course.name : 'Unknown Course';
+    // Initialize start time state with UTC parsing
+    const startDateTime = parseDateTimeStringUTC(completeBookingData.start_time);
+    const [startDate, setStartDate] = useState<Date>(startDateTime.date);
+    const [startTime, setStartTime] = useState<string>(startDateTime.time);
+    const [isStartPopoverOpen, setIsStartPopoverOpen] = useState(false);
+
+    // Initialize end time state with UTC parsing
+    const endDateTime = parseDateTimeStringUTC(completeBookingData.end_time);
+    const [endDate, setEndDate] = useState<Date>(endDateTime.date);
+    const [endTime, setEndTime] = useState<string>(endDateTime.time);
+    const [isEndPopoverOpen, setIsEndPopoverOpen] = useState(false);
+
+    const handleStartDateSelect = (selectedDate: Date | undefined) => {
+        if (selectedDate) {
+            const [hours, minutes] = startTime.split(':');
+            // Use UTC methods to avoid timezone issues
+            const newDate = new Date(Date.UTC(
+                selectedDate.getFullYear(),
+                selectedDate.getMonth(),
+                selectedDate.getDate(),
+                parseInt(hours),
+                parseInt(minutes)
+            ));
+            setStartDate(newDate);
+            setIsStartPopoverOpen(false);
+        }
+    };
+
+    const handleStartTimeChange = (timeValue: string) => {
+        setStartTime(timeValue);
+        const [hours, minutes] = timeValue.split(':');
+        // Use UTC methods to maintain UTC time
+        const newDate = new Date(Date.UTC(
+            startDate.getUTCFullYear(),
+            startDate.getUTCMonth(),
+            startDate.getUTCDate(),
+            parseInt(hours),
+            parseInt(minutes)
+        ));
+        setStartDate(newDate);
+    };
+
+    const handleEndDateSelect = (selectedDate: Date | undefined) => {
+        if (selectedDate) {
+            const [hours, minutes] = endTime.split(':');
+            // Use UTC methods to avoid timezone issues
+            const newDate = new Date(Date.UTC(
+                selectedDate.getFullYear(),
+                selectedDate.getMonth(),
+                selectedDate.getDate(),
+                parseInt(hours),
+                parseInt(minutes)
+            ));
+            setEndDate(newDate);
+            setIsEndPopoverOpen(false);
+        }
+    };
+
+    const handleEndTimeChange = (timeValue: string) => {
+        setEndTime(timeValue);
+        const [hours, minutes] = timeValue.split(':');
+        // Use UTC methods to maintain UTC time
+        const newDate = new Date(Date.UTC(
+            endDate.getUTCFullYear(),
+            endDate.getUTCMonth(),
+            endDate.getUTCDate(),
+            parseInt(hours),
+            parseInt(minutes)
+        ));
+        setEndDate(newDate);
+    };
+
+    const handleSave = () => {
+        console.log("Updated Start Time:", startDate.toISOString());
+        console.log("Updated End Time:", endDate.toISOString());
+        // Add your save logic here
     };
 
     return (
@@ -128,19 +240,103 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
                         />
                     </div>
 
-                    <div>
+                    {/* <div>
                         <Label className="font-semibold text-gray-700">Status:</Label>
                         <p className="text-gray-900 capitalize">{completeBookingData.status}</p>
-                    </div>
+                    </div> */}
 
                     <div>
                         <Label className="font-semibold text-gray-700">Start Time:</Label>
-                        <p className="text-gray-900">{new Date(completeBookingData.start_time).toLocaleString()}</p>
+                        <div className="flex w-full gap-2 mt-2">
+                            <Popover open={isStartPopoverOpen} onOpenChange={setIsStartPopoverOpen}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className={cn(
+                                            "w-1/2 font-normal justify-start text-left",
+                                            !startDate && "text-muted-foreground"
+                                        )}
+                                    >
+                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                        {startDate ? format(startDate, "PPP") : "Pick a date"}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                    <Calendar
+                                        mode="single"
+                                        selected={startDate}
+                                        onSelect={handleStartDateSelect}
+                                        initialFocus
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                            <Select value={startTime} onValueChange={handleStartTimeChange}>
+                                <SelectTrigger className="w-[120px]">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <ScrollArea className="h-[200px]">
+                                        {Array.from({ length: 96 }).map((_, i) => {
+                                            const hour = Math.floor(i / 4).toString().padStart(2, "0");
+                                            const minute = ((i % 4) * 15).toString().padStart(2, "0");
+                                            const timeValue = `${hour}:${minute}`;
+                                            return (
+                                                <SelectItem key={i} value={timeValue}>
+                                                    {timeValue}
+                                                </SelectItem>
+                                            );
+                                        })}
+                                    </ScrollArea>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
 
                     <div>
                         <Label className="font-semibold text-gray-700">End Time:</Label>
-                        <p className="text-gray-900">{new Date(completeBookingData.end_time).toLocaleString()}</p>
+                        <div className="flex w-full gap-2 mt-2">
+                            <Popover open={isEndPopoverOpen} onOpenChange={setIsEndPopoverOpen}>
+                                <PopoverTrigger asChild>
+                                    <Button
+                                        variant="outline"
+                                        className={cn(
+                                            "w-1/2 font-normal justify-start text-left",
+                                            !endDate && "text-muted-foreground"
+                                        )}
+                                    >
+                                        <CalendarIcon className="mr-2 h-4 w-4" />
+                                        {endDate ? format(endDate, "PPP") : "Pick a date"}
+                                    </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0" align="start">
+                                    <Calendar
+                                        mode="single"
+                                        selected={endDate}
+                                        onSelect={handleEndDateSelect}
+                                        initialFocus
+                                    />
+                                </PopoverContent>
+                            </Popover>
+                            <Select value={endTime} onValueChange={handleEndTimeChange}>
+                                <SelectTrigger className="w-[120px]">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <ScrollArea className="h-[200px]">
+                                        {Array.from({ length: 96 }).map((_, i) => {
+                                            const hour = Math.floor(i / 4).toString().padStart(2, "0");
+                                            const minute = ((i % 4) * 15).toString().padStart(2, "0");
+                                            const timeValue = `${hour}:${minute}`;
+                                            return (
+                                                <SelectItem key={i} value={timeValue}>
+                                                    {timeValue}
+                                                </SelectItem>
+                                            );
+                                        })}
+                                    </ScrollArea>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
 
                     {completeBookingData.reason && (
@@ -151,8 +347,9 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
                     )}
                 </div>
 
-                <DialogFooter>
-                    <Button onClick={onClose}>Close</Button>
+                <DialogFooter className="gap-2">
+                    <Button variant="outline" onClick={onClose}>Cancel</Button>
+                    <Button onClick={handleSave}>Save</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

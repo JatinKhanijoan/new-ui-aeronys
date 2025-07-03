@@ -91,6 +91,35 @@ body {
 }
 
 @layer base {
+
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: #a1a1aa transparent;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-button {
+    display: none;
+    height: 0;
+    width: 0;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background-color: #E2E2E5;
+    border-radius: 9999px;
+  }
+
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+}
+
+@layer base {
   * {
     @apply border-border outline-ring/50;
   }

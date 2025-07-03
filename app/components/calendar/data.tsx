@@ -137,13 +137,13 @@ export const bookingResponse = {
             "instructor_id": "c602c254-2001-7086-dd8b-17d1d4a16019",
             "aircraft_id": "47a8de4a-8015-496d-8ccc-f6eaf22cc8d9",
             "start_time": "2025-07-01T09:00:00.000Z",
-            "end_time": "2025-07-01T10:00:00.000Z",
+            "end_time": "2025-07-01T11:00:00.000Z",
             "type": "dual",
             "status": "booked",
             "reason": null,
             "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
             "legacy": null,
-            "course_id": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
             "aircrafts": {
                 "registration_number": "G-CDEF",
                 "type": "Piper Cadet PA28",
@@ -221,7 +221,7 @@ export const bookingResponse = {
             "reason": null,
             "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
             "legacy": null,
-            "course_id": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
             "aircrafts": {
                 "registration_number": "G-CDEF",
                 "type": "Piper Cadet PA28",
@@ -233,6 +233,247 @@ export const bookingResponse = {
                 "email_id": "65sol@rustyload.com"
             }
         },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000001",
+            "user_id": ["a1000000-f1c1-7a01-1340-123456789abc"],
+            "instructor_id": "86c2c224-7061-707d-a60d-148eeea95e18",
+            "aircraft_id": "42dcd911-5eb3-4c9c-8349-016806178039",
+            "start_time": "2025-07-02T08:00:00.000Z",
+            "end_time": "2025-07-02T10:00:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-BTID",
+                "type": "Piper Warrior PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Luke",
+                "last_name": "Skywalker",
+                "email_id": "luke@rebellion.org"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000002",
+            "user_id": ["b2000000-f2c2-7b02-1340-abcdefabcdef"],
+            "instructor_id": "76426294-b031-70c8-81ab-f15ba90fb04c",
+            "aircraft_id": "4e014cc6-7a56-46ef-9578-d4aaa9760f7c",
+            "start_time": "2025-07-02T11:00:00.000Z",
+            "end_time": "2025-07-02T13:00:00.000Z",
+            "type": "solo",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-CLFY",
+                "type": "Piper Archer PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Rey",
+                "last_name": "Palpatine",
+                "email_id": "rey@force.net"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000003",
+            "user_id": ["a662d264-b051-703d-a029-89aecefc9075"],
+            "instructor_id": "9612f2f4-a0e1-7020-a7d0-180fe2ec6652",
+            "aircraft_id": "81df0cc1-65e5-4940-b947-d38782d1e4c7",
+            "start_time": "2025-07-02T13:00:00.000Z",
+            "end_time": "2025-07-02T15:30:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-CIZO",
+                "type": "Piper Cadet PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Chinmay",
+                "last_name": "Anaokar",
+                "email_id": "canaokar@gmail.com"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000004",
+            "user_id": ["0632e2c4-f0c1-7063-1340-f37fe4afdcdc"],
+            "instructor_id": "36f26294-7091-701a-deb0-c9f6a6acbdb0",
+            "aircraft_id": "2d3508e8-9f3a-44da-8cd1-b2bad6e0884f",
+            "start_time": "2025-07-02T15:00:00.000Z",
+            "end_time": "2025-07-02T17:30:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-LSFT",
+                "type": "Piper Warrior PA28",
+                "active_status": null
+            },
+            "users": {
+                "first_name": "Leia",
+                "last_name": "Skywalker",
+                "email_id": "fosyqyvo@logsmarter.net"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000005",
+            "user_id": ["b2000000-f2c2-7b02-1340-abcdefabcdef"],
+            "instructor_id": "96a27204-70f1-70d4-c1e5-73d2145bd193",
+            "aircraft_id": "03b6bbcc-b1e8-44fa-a7f1-c94729f666b1",
+            "start_time": "2025-07-02T17:00:00.000Z",
+            "end_time": "2025-07-02T19:30:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-TEST",
+                "type": "Piper Warrior PA28",
+                "active_status": false
+            },
+            "users": {
+                "first_name": "Rey",
+                "last_name": "Palpatine",
+                "email_id": "rey@force.net"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000006",
+            "user_id": ["a1000000-f1c1-7a01-1340-123456789abc"],
+            "instructor_id": "a6421234-70e1-7002-8a60-1eb5a8d470f3",
+            "aircraft_id": "86c15f2b-e690-426d-b452-072e502f5783",
+            "start_time": "2025-07-03T08:00:00.000Z",
+            "end_time": "2025-07-03T10:30:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-ENNA",
+                "type": "Piper Warrior PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Luke",
+                "last_name": "Skywalker",
+                "email_id": "luke@rebellion.org"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000007",
+            "user_id": ["a662d264-b051-703d-a029-89aecefc9075"],
+            "instructor_id": "7642d2e4-b091-7016-1c51-80cad976e15d",
+            "aircraft_id": "81df0cc1-65e5-4940-b947-d38782d1e4c7",
+            "start_time": "2025-07-03T10:00:00.000Z",
+            "end_time": "2025-07-03T12:00:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-CIZO",
+                "type": "Piper Cadet PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Chinmay",
+                "last_name": "Anaokar",
+                "email_id": "canaokar@gmail.com"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000008",
+            "user_id": ["b2000000-f2c2-7b02-1340-abcdefabcdef"],
+            "instructor_id": "c602c254-2001-7086-dd8b-17d1d4a16019",
+            "aircraft_id": "4e014cc6-7a56-46ef-9578-d4aaa9760f7c",
+            "start_time": "2025-07-03T12:00:00.000Z",
+            "end_time": "2025-07-03T14:00:00.000Z",
+            "type": "solo",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-CLFY",
+                "type": "Piper Archer PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Rey",
+                "last_name": "Palpatine",
+                "email_id": "rey@force.net"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000009",
+            "user_id": ["0632e2c4-f0c1-7063-1340-f37fe4afdcdc"],
+            "instructor_id": "36f26294-7091-701a-deb0-c9f6a6acbdb0",
+            "aircraft_id": "03b6bbcc-b1e8-44fa-a7f1-c94729f666b1",
+            "start_time": "2025-07-03T14:00:00.000Z",
+            "end_time": "2025-07-03T16:30:00.000Z",
+            "type": "dual",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-TEST",
+                "type": "Piper Warrior PA28",
+                "active_status": false
+            },
+            "users": {
+                "first_name": "Leia",
+                "last_name": "Skywalker",
+                "email_id": "fosyqyvo@logsmarter.net"
+            }
+        },
+        {
+            "booking_id": "a1b2c3d4-0001-0001-0001-000000000010",
+            "user_id": ["a1000000-f1c1-7a01-1340-123456789abc"],
+            "instructor_id": "a6421234-70e1-7002-8a60-1eb5a8d470f3",
+            "aircraft_id": "42dcd911-5eb3-4c9c-8349-016806178039",
+            "start_time": "2025-07-03T16:00:00.000Z",
+            "end_time": "2025-07-03T18:00:00.000Z",
+            "type": "solo",
+            "status": "booked",
+            "reason": null,
+            "organisation_id": "6ce72bae-8ea2-4193-b457-df97889eeba4",
+            "legacy": null,
+            "course_id": "0e8b3fe2-3f63-4038-9b0d-e0382d808c65",
+            "aircrafts": {
+                "registration_number": "G-BTID",
+                "type": "Piper Warrior PA28",
+                "active_status": true
+            },
+            "users": {
+                "first_name": "Luke",
+                "last_name": "Skywalker",
+                "email_id": "luke@rebellion.org"
+            }
+        }
+
     ],
     "memberNames": [
         {
@@ -248,7 +489,22 @@ export const bookingResponse = {
             "last_name": "Anaokar",
             "email_id": "canaokar@gmail.com",
             "profile_image_url": "https://res.cloudinary.com/doahxfhjj/image/upload/v1734373964/ft5leuhqheqznyotmdjn.jpg",
+        },
+        {
+            "user_id": "a1000000-f1c1-7a01-1340-123456789abc",
+            "first_name": "Luke",
+            "last_name": "Skywalker",
+            "email_id": "luke@rebellion.org",
+            "profile_image_url": "https://res.cloudinary.com/demo/image/upload/v1234567890/luke.jpg"
+        },
+        {
+            "user_id": "b2000000-f2c2-7b02-1340-abcdefabcdef",
+            "first_name": "Rey",
+            "last_name": "Palpatine",
+            "email_id": "rey@force.net",
+            "profile_image_url": "https://res.cloudinary.com/demo/image/upload/v1234567890/rey.jpg"
         }
+
     ],
 };
 
@@ -284,6 +540,8 @@ export const BookingTypes = {
     'G': 'ground-school',
     'E': 'exam',
     'P': 'private-hire',
+    'T': 'trial',
+    'V': 'voucher'
 }
 
 export const BookingTypeLabels = {
@@ -292,4 +550,6 @@ export const BookingTypeLabels = {
     'ground-school': 'Ground School',
     'exam': 'Exam',
     'private-hire': 'Private Hire',
+    'trial': 'Trial',
+    'voucher': 'Voucher'
 }
