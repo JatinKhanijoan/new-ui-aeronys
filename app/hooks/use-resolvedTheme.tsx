@@ -5,15 +5,17 @@ type ResolvedTheme = "dark" | "light"
 
 export function useResolvedTheme(): ResolvedTheme {
     const { theme } = useTheme()
-    const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>(() => {
-        // Initial resolution on mount
-        if (theme === "system") {
-            return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-        }
-        return theme
-    })
+    const [mounted, setMounted] = useState(false)
+    const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("light")
+
+    // Track when component mounts (client-side only)
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     useEffect(() => {
+        if (!mounted) return
+
         const resolveTheme = () => {
             if (theme === "system") {
                 const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
@@ -36,7 +38,7 @@ export function useResolvedTheme(): ResolvedTheme {
             mediaQuery.addEventListener("change", handleChange)
             return () => mediaQuery.removeEventListener("change", handleChange)
         }
-    }, [theme])
+    }, [theme, mounted])
 
     return resolvedTheme
 }

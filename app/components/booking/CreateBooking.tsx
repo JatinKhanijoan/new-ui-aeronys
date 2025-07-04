@@ -60,7 +60,6 @@ const options = [
     },
 ];
 
-// Mock time slots - replace with actual data from your API
 const generateTimeSlots = (date: Date, instructorId?: string): TimeSlot[] => {
     const slots: TimeSlot[] = [];
     const startHour = 8;
@@ -87,32 +86,37 @@ const CreateBooking: React.FC = () => {
     const [selectedType, setSelectedType] = useState<string>(options[0].value);
     const [selectedCourse, setSelectedCourse] = useState<string>("");
     const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date());
-    const [selectedSlot, setSelectedSlot] = useState<TimeSlot | null>(null);
+    const [selectedSlots, setSelectedSlots] = useState<TimeSlot[]>([]);
 
     const availableSlots = selectedDate && selectedInstructor
         ? generateTimeSlots(selectedDate, selectedInstructor.user_id)
         : [];
 
     const handleSubmit = () => {
+        const availability_id: string[] = selectedSlots.map(slot => slot.id);
+
         const bookingData = {
             members: selectedMembers,
             instructor: selectedInstructor,
             type: selectedType,
             course: selectedCourse,
             date: selectedDate,
-            slot: selectedSlot,
+            slots: selectedSlots,
+            availability_id,
             booking_details: {
-                start_time: selectedSlot?.start_time,
-                end_time: selectedSlot?.end_time,
-                duration: "2 hours"
+                selected_slots: selectedSlots.map(slot => ({
+                    start_time: slot.start_time,
+                    end_time: slot.end_time
+                })),
+                total_duration: `${selectedSlots.length * 2} hours`
             }
         };
 
         console.log("Booking Details:", bookingData);
+        console.log("Availability IDs:", availability_id);
     };
 
-    const isFormComplete = selectedMembers.length > 0 && selectedInstructor && selectedCourse && selectedDate && selectedSlot;
-
+    const isFormComplete = selectedMembers.length > 0 && selectedInstructor && selectedCourse && selectedDate && selectedSlots.length > 0;
     return (
         <div className="container mx-auto p-4 max-w-7xl">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -228,12 +232,14 @@ const CreateBooking: React.FC = () => {
                                         <p className="font-medium">{selectedDate?.toLocaleDateString()}</p>
                                     </div>
                                     <div className="space-y-1.5">
-                                        <Label className="text-muted-foreground text-sm">Time</Label>
-                                        <p className="font-medium">{selectedSlot?.start_time} - {selectedSlot?.end_time}</p>
+                                        <Label className="text-muted-foreground text-sm">Time Slots</Label>
+                                        <p className="font-medium">
+                                            {selectedSlots.map(slot => `${slot.start_time} - ${slot.end_time}`).join(", ")}
+                                        </p>
                                     </div>
                                     <div className="space-y-1.5">
                                         <Label className="text-muted-foreground text-sm">Duration</Label>
-                                        <p className="font-medium">2 hours</p>
+                                        <p className="font-medium">{selectedSlots.length * 2} hours</p>
                                     </div>
                                 </div>
                             </CardContent>
@@ -277,7 +283,18 @@ const CreateBooking: React.FC = () => {
                                         availableSlots.map((slot) => (
                                             <button
                                                 key={slot.id}
-                                                onClick={() => slot.available && setSelectedSlot(slot)}
+                                                onClick={() => {
+                                                    if (slot.available) {
+                                                        setSelectedSlots(prev => {
+                                                            const isSelected = prev.some(s => s.id === slot.id);
+                                                            if (isSelected) {
+                                                                return prev.filter(s => s.id !== slot.id);
+                                                            } else {
+                                                                return [...prev, slot];
+                                                            }
+                                                        });
+                                                    }
+                                                }}
                                                 disabled={!slot.available}
                                                 className={cn(
                                                     "w-full p-3 rounded-lg border text-left transition-all",
@@ -285,18 +302,19 @@ const CreateBooking: React.FC = () => {
                                                     slot.available
                                                         ? "cursor-pointer"
                                                         : "cursor-not-allowed opacity-50 bg-muted",
-                                                    selectedSlot?.id === slot.id
-                                                        ? "border-primary bg-primary/5 ring-2 ring-primary/20"
+                                                    selectedSlots.some(s => s.id === slot.id)
+                                                        ? "border-primary bg-primary/5 ring-1 ring-primary"
                                                         : "border-border"
                                                 )}
                                             >
+                                                <CircleCheck className={cn(
+                                                    "absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 h-6 w-6 text-primary",
+                                                    selectedSlots.some(s => s.id === slot.id) ? "block" : "hidden"
+                                                )} />
                                                 <div className="flex items-center justify-between">
                                                     <div>
                                                         <div className="font-medium">
                                                             {slot.start_time} - {slot.end_time}
-                                                        </div>
-                                                        <div className="text-xs text-muted-foreground">
-                                                            2 hours duration
                                                         </div>
                                                     </div>
                                                     {slot.available ? (

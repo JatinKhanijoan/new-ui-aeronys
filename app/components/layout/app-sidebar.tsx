@@ -23,11 +23,12 @@ import {
 import { NavUser } from "./nav-user"
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, useSidebar } from "~/components/ui/sidebar"
 import { UnifiedNav } from "./unified-nav"
-import logo from "../../../public/aeronys-logo.png"
 import { useLocation } from "react-router"
+import { useResolvedTheme } from "~/hooks/use-resolvedTheme"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const location = useLocation();
+    const theme = useResolvedTheme();
 
     const data = {
         navMain: [
@@ -202,7 +203,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                             asChild
                             className="data-[slot=sidebar-menu-button]:!p-1.5"
                         >
-                            <img className="w-24 h-auto dark:hidden" src={logo} alt="" />
+                            <img
+                                className="w-24 h-auto"
+                                src={theme === 'dark' ? "/aeronys-logo-white.png" : "/aeronys-logo.png"}
+                                alt="Aeronys Logo"
+                            />
                         </SidebarMenuButton>
                     </SidebarMenuItem>
                 </SidebarMenu>
