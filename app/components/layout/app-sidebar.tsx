@@ -76,14 +76,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 icon: Bot,
                 items: [
                     {
+                        title: "Bookings",
+                        path: "/booking",
+                        isActive: location.pathname === "/booking",
+                    },
+                    {
                         title: "New Booking",
                         path: "/booking/new",
                         isActive: location.pathname === "/booking/new",
-                    },
-                    {
-                        title: "View Bookings",
-                        path: "/booking/view",
-                        isActive: location.pathname === "/booking/view",
                     },
                     {
                         title: "Pending Requests",

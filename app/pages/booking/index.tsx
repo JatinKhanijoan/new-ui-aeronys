@@ -1,3 +1,4 @@
+import ViewBookings from "~/components/booking/ViewBookings";
 import PageTitle from "~/components/shared/pageTitle";
 
 const Booking = () => {
@@ -7,6 +8,7 @@ const Booking = () => {
                 title="Bookings"
                 description="View and manage your bookings."
             />
+            <ViewBookings />
         </div>
     );
 };

@@ -155,7 +155,7 @@ const CalendarPage = () => {
                 title="Calendar"
                 description="View and manage flight schedules."
             />
-            <Suspense fallback={<div>Loading calendar...</div>}>
+            <Suspense fallback={<div></div>}>
                 <ResourceTimelineCalendar
                     resources={resources}
                     events={allEvents}
