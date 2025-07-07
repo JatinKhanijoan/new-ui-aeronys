@@ -1,6 +1,6 @@
 import { Calendar } from "lucide-react"
 import { Button } from "~/components/ui/button"
-import { SidebarTrigger } from "~/components/ui/sidebar"
+import { SIDEBAR_WIDTH, SIDEBAR_WIDTH_ICON, SidebarTrigger, useSidebar } from "~/components/ui/sidebar"
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -19,11 +19,12 @@ import { useLocation, useParams } from "react-router"
 export function Header() {
     const location = useLocation();
     const title = location.pathname.split("/")[1]?.charAt(0).toUpperCase() + location.pathname.split("/")[1]?.slice(1).toLowerCase()
+    const { state } = useSidebar()
 
     return (
         <div className="w-full pb-20">
             <header className="flex border-l h-16 fixed z-50 bg-background right-0 shrink-0 items-center gap-2 px-4 border-b"
-                style={{ left: 'var(--sidebar-width, 16rem)' }}
+                style={{ left: state === 'expanded' ? `var(--sidebar-width, ${SIDEBAR_WIDTH})` : `4rem` }}
             >
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                     <SidebarTrigger className="-ml-1 shrink-0" />

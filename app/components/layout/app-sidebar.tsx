@@ -220,7 +220,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                 state === "collapsed" && "hidden"
                             )}>
                                 <h1 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text leading-none">Aeronys.</h1>
-                                <p className="text-sm text-gray-500 leading-none">Flight Ops made simple</p>
+                                <p className="text-sm leading-none">Flight Ops made simple</p>
                             </div>
                         </div>
 
