@@ -18,17 +18,20 @@ import {
     SquareTerminal,
     Tag,
     User,
+    Sparkles,
 } from "lucide-react"
 
 import { NavUser } from "./nav-user"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, useSidebar } from "~/components/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem, SidebarRail, SidebarTrigger, useSidebar } from "~/components/ui/sidebar"
 import { UnifiedNav } from "./unified-nav"
 import { useLocation } from "react-router"
 import { useResolvedTheme } from "~/hooks/use-resolvedTheme"
+import { cn } from "~/lib/utils"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const location = useLocation();
     const theme = useResolvedTheme();
+    const { state } = useSidebar();
 
     const data = {
         navMain: [
@@ -195,27 +198,41 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     }
 
     return (
-        <Sidebar collapsible="icon" {...props} className="scrollbar-custom">
-            <SidebarHeader>
+        <Sidebar
+            variant="sidebar"
+            collapsible="icon"
+            {...props}
+            className={cn(
+                "scrollbar-thin scrollbar-track-transparent scrollbar-thumb-slate-300 dark:scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-400 dark:hover:scrollbar-thumb-slate-500",
+                props.className
+            )}
+        >
+            <SidebarHeader className="border-b h-16">
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <SidebarMenuButton
-                            asChild
-                            className="data-[slot=sidebar-menu-button]:!p-1.5"
-                        >
-                            <img
-                                className="w-24 h-auto"
-                                src={theme === 'dark' ? "/aeronys-logo-white.png" : "/aeronys-logo.png"}
-                                alt="Aeronys Logo"
-                            />
-                        </SidebarMenuButton>
+                        <div className="flex items-start gap-3 mt-1">
+                            <div className={cn("w-10 h-10 bg-gradient-to-br from-primary to-purple-600 rounded-lg flex items-center justify-center",
+                                state === "collapsed" && "translate-x-1",
+                            )}>
+                                <Plane className="w-5 h-5 text-white" />
+                            </div>
+                            <div className={cn("flex flex-col justify-between h-10",
+                                state === "collapsed" && "hidden"
+                            )}>
+                                <h1 className="text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text leading-none">Aeronys.</h1>
+                                <p className="text-sm text-gray-500 leading-none">Flight Ops made simple</p>
+                            </div>
+                        </div>
+
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent>
+
+            <SidebarContent className="px-2">
                 <UnifiedNav items={data.navMain} />
             </SidebarContent>
-            <SidebarFooter>
+
+            <SidebarFooter className="border-t-0">
                 <NavUser user={data.user} />
             </SidebarFooter>
         </Sidebar>

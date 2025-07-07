@@ -21,8 +21,10 @@ export function Header() {
     const title = location.pathname.split("/")[1]?.charAt(0).toUpperCase() + location.pathname.split("/")[1]?.slice(1).toLowerCase()
 
     return (
-        <div className="w-full p-4">
-            <header className="flex h-14 w-full shrink-0 items-center gap-2 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 px-4 rounded-lg border shadow-sm transition-all duration-300 ease-linear">
+        <div className="w-full pb-20">
+            <header className="flex border-l h-16 fixed z-50 bg-background right-0 shrink-0 items-center gap-2 px-4 border-b"
+                style={{ left: 'var(--sidebar-width, 16rem)' }}
+            >
                 <div className="flex items-center gap-2 flex-1 min-w-0">
                     <SidebarTrigger className="-ml-1 shrink-0" />
                     <Separator orientation="vertical" className="mr-2 h-4 shrink-0" />
