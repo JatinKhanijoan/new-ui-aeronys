@@ -32,7 +32,7 @@ export interface NavItem {
 
 export function UnifiedNav({
     items,
-    groupLabel = "Navigation",
+    groupLabel = "NAVIGATION",
 }: {
     items: NavItem[]
     groupLabel?: string

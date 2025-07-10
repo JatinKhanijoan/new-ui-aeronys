@@ -57,7 +57,6 @@ const dateToUTC = (date: Date): Date => {
 };
 
 const formatUTCDateForDisplay = (date: Date): string => {
-    // Format UTC date for display (no timezone conversion)
     const options: Intl.DateTimeFormatOptions = {
         timeZone: 'UTC',
         weekday: 'long',
@@ -147,7 +146,6 @@ const ResourceTimelineCalendar: React.FC<ResourceTimelineCalendarProps> = ({
         const bookingType = eventInfo.event.extendedProps.bookingType as string;
         const title = eventInfo.event.title;
 
-        // Special handling for maintenance events
         if (bookingType === 'maintenance') {
             return (
                 <div className="flex items-center overflow-hidden">

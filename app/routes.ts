@@ -12,4 +12,14 @@ export default [
         index("pages/booking/index.tsx"),
         route("new", "pages/booking/newBooking.tsx"),
     ]),
+    route("/organisation", "pages/organisation/layout.tsx", [
+        index("pages/organisation/index.tsx"),
+        route("settings", "pages/organisation/settings.tsx"),
+        route("billing", "pages/organisation/billing.tsx"),
+        route("rates", "pages/organisation/rates.tsx"),
+    ]),
+    route("/invoicing", "pages/invoicing/layout.tsx", [
+        index("pages/invoicing/index.tsx"),
+        route(":invoice_id", "pages/invoicing/invoice.tsx"),
+    ]),
 ] satisfies RouteConfig;

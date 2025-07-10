@@ -15,12 +15,10 @@ interface SearchableListProps<T> {
     caseSensitive?: boolean;
 }
 
-// Helper function to get nested object values (e.g., "user.name")
 const getNestedValue = (obj: any, path: string): any => {
     return path.split('.').reduce((current, key) => current?.[key], obj);
 };
 
-// Helper function to search in all string properties of an object
 const searchInObject = (obj: any, searchTerm: string, caseSensitive: boolean = false): boolean => {
     if (typeof obj === 'string') {
         return caseSensitive
@@ -55,7 +53,6 @@ function SearchableList<T>({
 }: SearchableListProps<T>) {
     const [searchTerm, setSearchTerm] = useState('');
 
-    // Filter data based on search term
     const filteredData = useMemo(() => {
         if (!searchTerm.trim()) {
             return data;
@@ -64,7 +61,6 @@ function SearchableList<T>({
         const searchValue = caseSensitive ? searchTerm : searchTerm.toLowerCase();
 
         return data.filter(item => {
-            // If searchFields are specified, search only in those fields
             if (searchFields.length > 0) {
                 return searchFields.some(field => {
                     const value = getNestedValue(item, field as string);
@@ -77,7 +73,6 @@ function SearchableList<T>({
                 });
             }
 
-            // Otherwise, search in all properties of the object
             return searchInObject(item, searchTerm, caseSensitive);
         });
     }, [data, searchTerm, searchFields, caseSensitive]);

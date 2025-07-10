@@ -50,14 +50,12 @@ const formatUTCDateTime = (dateString: string): string => {
 const parseDateTimeStringUTC = (dateTimeString: string): { date: Date; time: string } => {
     const date = new Date(dateTimeString);
 
-    // Extract UTC components to avoid timezone conversion
     const year = date.getUTCFullYear();
     const month = date.getUTCMonth();
     const day = date.getUTCDate();
     const hours = date.getUTCHours();
     const minutes = date.getUTCMinutes();
 
-    // Create a new date object with UTC components
     const utcDate = new Date(Date.UTC(year, month, day, hours, minutes));
     const timeString = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
 
@@ -75,13 +73,13 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
 }) => {
     if (!eventData || !completeBookingData) return null;
 
-    // Initialize start time state with UTC parsing
+    // Initialize start time state with UTC
     const startDateTime = parseDateTimeStringUTC(completeBookingData.start_time);
     const [startDate, setStartDate] = useState<Date>(startDateTime.date);
     const [startTime, setStartTime] = useState<string>(startDateTime.time);
     const [isStartPopoverOpen, setIsStartPopoverOpen] = useState(false);
 
-    // Initialize end time state with UTC parsing
+    // Initialize end time state with UTC
     const endDateTime = parseDateTimeStringUTC(completeBookingData.end_time);
     const [endDate, setEndDate] = useState<Date>(endDateTime.date);
     const [endTime, setEndTime] = useState<string>(endDateTime.time);
@@ -90,7 +88,6 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
     const handleStartDateSelect = (selectedDate: Date | undefined) => {
         if (selectedDate) {
             const [hours, minutes] = startTime.split(':');
-            // Use UTC methods to avoid timezone issues
             const newDate = new Date(Date.UTC(
                 selectedDate.getFullYear(),
                 selectedDate.getMonth(),
@@ -106,7 +103,6 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
     const handleStartTimeChange = (timeValue: string) => {
         setStartTime(timeValue);
         const [hours, minutes] = timeValue.split(':');
-        // Use UTC methods to maintain UTC time
         const newDate = new Date(Date.UTC(
             startDate.getUTCFullYear(),
             startDate.getUTCMonth(),
@@ -120,7 +116,6 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
     const handleEndDateSelect = (selectedDate: Date | undefined) => {
         if (selectedDate) {
             const [hours, minutes] = endTime.split(':');
-            // Use UTC methods to avoid timezone issues
             const newDate = new Date(Date.UTC(
                 selectedDate.getFullYear(),
                 selectedDate.getMonth(),
@@ -136,7 +131,6 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
     const handleEndTimeChange = (timeValue: string) => {
         setEndTime(timeValue);
         const [hours, minutes] = timeValue.split(':');
-        // Use UTC methods to maintain UTC time
         const newDate = new Date(Date.UTC(
             endDate.getUTCFullYear(),
             endDate.getUTCMonth(),
@@ -150,7 +144,6 @@ const EventDetailsDialog: React.FC<EventDetailsDialogProps> = ({
     const handleSave = () => {
         console.log("Updated Start Time:", startDate.toISOString());
         console.log("Updated End Time:", endDate.toISOString());
-        // Add your save logic here
     };
 
     return (

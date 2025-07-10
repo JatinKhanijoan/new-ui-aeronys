@@ -16,86 +16,93 @@ import {
     TableHeader,
     TableRow,
 } from "~/components/ui/table";
+import { useNavigate } from 'react-router';
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
-import { Eye, Calendar, Clock, Users, User, Plane, SquareDashedMousePointerIcon } from "lucide-react";
-import { bookingResponse, instructorResponse } from '../calendar/data';
+import { Eye, Calendar, CreditCard, DollarSign, FileText, CheckCircle, XCircle } from "lucide-react";
 
-interface Booking {
-    booking_id: string;
-    user_id: string[];
-    instructor_id: string;
-    start_time: string;
-    end_time: string;
-    type: string;
-    status: string;
-    aircrafts: {
-        registration_number: string;
-        type: string;
-    };
-    users: {
-        first_name: string;
-        last_name: string;
-        email_id: string;
-    };
+export interface InvoiceProps {
+    invoice_id: string
+    aircraft_id: string | null
+    booking_id: string | null
+    instructor_id: string | null
+    user_id: string | null
+    organisation_id: string | null
+    invoice_type: string | null
+    instructor_charge: number | null
+    flight_rate: number | null
+    number_of_hours: string | number | null
+    airport_name: string | null
+    fuel_surcharge: number | null
+    vat_applied: number | null
+    total_with_vat: number | null
+    total_without_vat: number | null
+    invoice_creation_time: string
+    invoice_signed_by_id: string | null
+    invoice_signed_by_signature_url: string | null
+    invoice_signed_timestamp: string | null
+    invoice_sent_timestamp: string | null
+    payment_method: string | null
+    payment_status: boolean
+    transaction_id: string | null
+    service?: string | null
+    item_name?: string | null
+    item_description?: string | null
+    home_airport?: string | null
+    away_airport?: string | null
+    home_airport_charges?: string | null
+    away_airport_charges?: string | null
+    is_markup_included?: boolean
+    markup_price?: string | null
+    stripe_temp_id?: string | null
 }
 
-interface Member {
-    user_id: string;
-    first_name: string;
-    last_name: string;
-    email_id: string;
+interface ViewInvoicesProps {
+    invoices: InvoiceProps[];
 }
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 10;
 
-export default function ViewBookings() {
+export default function ViewInvoices({ invoices }: ViewInvoicesProps) {
     const [currentPage, setCurrentPage] = useState(1);
-    const { bookings, memberNames } = bookingResponse;
-
-    const totalPages = Math.ceil(bookings.length / ITEMS_PER_PAGE);
+    const navigate = useNavigate();
+    const totalPages = Math.ceil(invoices.length / ITEMS_PER_PAGE);
     const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
     const endIndex = startIndex + ITEMS_PER_PAGE;
-    const currentBookings = bookings.slice(startIndex, endIndex);
+    const currentInvoices = invoices.slice(startIndex, endIndex);
 
-    const getUserName = (userIds: string[]): string => {
-        if (userIds.length === 0) return "Unknown User";
-
-        const primaryUser = memberNames.find(member => member.user_id === userIds[0]);
-        if (!primaryUser) return "Unknown User";
-
-        if (userIds.length === 1) {
-            return `${primaryUser.first_name} ${primaryUser.last_name}`;
-        }
-
-        return `${primaryUser.first_name} ${primaryUser.last_name} +${userIds.length - 1}`;
-    };
-
-    const formatDateTime = (startTime: string, endTime: string): string => {
-        const start = new Date(startTime);
-        const end = new Date(endTime);
-
-        const date = start.toLocaleDateString('en-US', {
+    const formatDate = (dateString: string): string => {
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
             month: 'short',
             day: 'numeric',
             year: 'numeric'
         });
-
-        const timeRange = `${start.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        })} - ${end.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: true
-        })}`;
-
-        return `${date} • ${timeRange}`;
     };
 
-    const handleViewDetails = (bookingId: string) => {
-        console.log(`View details for booking: ${bookingId}`);
+    const formatCurrency = (amount: number): string => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD'
+        }).format(amount);
+    };
+
+    const getPaymentStatusBadge = (status: boolean) => {
+        return status ? (
+            <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+                <CheckCircle className="w-3 h-3 mr-1" />
+                Paid
+            </Badge>
+        ) : (
+            <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-200">
+                <XCircle className="w-3 h-3 mr-1" />
+                Unpaid
+            </Badge>
+        );
+    };
+
+    const handleViewDetails = (invoiceId: string) => {
+        navigate(`/invoicing/${invoiceId}`);
     };
 
     const handlePageChange = (page: number) => {
@@ -103,100 +110,97 @@ export default function ViewBookings() {
     };
 
     return (
-        <div className="w-full max-w-7xl mx-autox">
+        <div className="w-full max-w-7xl mx-auto">
             <div className="rounded-lg shadow-sm overflow-hidden">
                 <Table>
                     <TableHeader>
                         <TableRow className='bg-primary/40 hover:bg-primary/50'>
                             <TableHead className="pl-6 font-semibold">
                                 <div className="flex items-center gap-2">
-                                    <Users className="w-4 h-4" />
-                                    Student Name
+                                    <Calendar className="w-4 h-4" />
+                                    Invoice Date
                                 </div>
                             </TableHead>
                             <TableHead className="font-semibold">
                                 <div className="flex items-center gap-2">
-                                    <User className="w-4 h-4" />
-                                    Instructor
+                                    <FileText className="w-4 h-4" />
+                                    Invoice Number
                                 </div>
                             </TableHead>
                             <TableHead className="font-semibold">
                                 <div className='flex items-center gap-2'>
-                                    <Plane className="w-4 h-4" />
-                                    Aircraft
+                                    <CreditCard className="w-4 h-4" />
+                                    Payment Method
                                 </div>
                             </TableHead>
                             <TableHead className="font-semibold">
                                 <div className="flex items-center gap-2">
-                                    <Calendar className="w-4 h-4" />
-                                    Type
+                                    <CheckCircle className="w-4 h-4" />
+                                    Status
                                 </div>
                             </TableHead>
                             <TableHead className="font-semibold">
-                                <div className="flex items-center justify-start gap-2">
-                                    <Clock className="w-4 h-4" />
-                                    Schedule
+                                <div className="flex items-center gap-2">
+                                    <DollarSign className="w-4 h-4" />
+                                    VAT
+                                </div>
+                            </TableHead>
+                            <TableHead className="font-semibold">
+                                <div className="flex items-center gap-2">
+                                    <DollarSign className="w-4 h-4" />
+                                    Total
                                 </div>
                             </TableHead>
                             <TableHead className="font-semibold text-center">
                                 <div className='flex items-center justify-center gap-2'>
-                                    <SquareDashedMousePointerIcon className="w-4 h-4" />
+                                    <Eye className="w-4 h-4" />
                                     Action
                                 </div>
                             </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {currentBookings.map((booking: Booking, index: number) => (
+                        {currentInvoices.map((invoice: InvoiceProps, index: number) => (
                             <TableRow
-                                key={booking.booking_id}
-                                className={`hover:bg-gray-50 transition-colors 
-                                    `}
-                                    >
-                                {/* ${index % 2 === 0 ? 'bg-white' : 'bg-gray-50/50'} */}
+                                key={invoice.invoice_id}
+                                className="hover:bg-gray-50 transition-colors"
+                            >
                                 <TableCell className="pl-6">
                                     <div className="font-medium">
-                                        {getUserName(booking.user_id)}
+                                        {formatDate(invoice.invoice_creation_time)}
                                     </div>
-                                    {booking.user_id.length > 1 && (
-                                        <div className="text-sm">
-                                            ({booking.user_id.length} members)
-                                        </div>
-                                    )}
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-mono text-sm font-semibold text-primary">
+                                        {invoice.invoice_id}
+                                    </div>
+                                </TableCell>
+                                <TableCell>
+                                    <div className="font-medium capitalize">
+                                        {invoice.payment_method || 'Not specified'}
+                                    </div>
+                                </TableCell>
+                                <TableCell>
+                                    {getPaymentStatusBadge(invoice.payment_status)}
                                 </TableCell>
                                 <TableCell>
                                     <div className="font-medium">
-                                        {booking.users.first_name} {booking.users.last_name}
+                                        {formatCurrency(invoice.vat_applied || 0)}
                                     </div>
                                 </TableCell>
                                 <TableCell>
-                                    <div className="space-y-1">
-                                        <div className="font-mono text-sm font-semibold text-primary">
-                                            {booking.aircrafts.registration_number}
-                                        </div>
-                                        <div className="text-xs text-gray-500">
-                                            {booking.aircrafts.type}
-                                        </div>
+                                    <div className="font-semibold text-lg">
+                                        {formatCurrency(invoice.total_with_vat || 0)}
                                     </div>
-                                </TableCell>
-                                <TableCell>
-                                    <Badge
-                                        variant={booking.type === 'dual' ? 'default' : 'secondary'}
-                                        className={booking.type === 'dual' ? 'bg-gray-200 text-primary' : 'bg-green-100 text-green-800'}
-                                    >
-                                        {booking.type.toUpperCase()}
-                                    </Badge>
-                                </TableCell>
-                                <TableCell>
-                                    <div className="text-sm">
-                                        {formatDateTime(booking.start_time, booking.end_time)}
+                                    <div className="text-xs text-gray-500">
+                                        (Excl. VAT: {formatCurrency(invoice.total_without_vat || 0)})
                                     </div>
                                 </TableCell>
                                 <TableCell className="text-center">
                                     <Button
                                         variant="outline"
                                         size="sm"
-                                        onClick={() => handleViewDetails(booking.booking_id)}
+                                        onClick={() => handleViewDetails(invoice.invoice_id)}
                                         className="inline-flex items-center gap-2 hover:bg-primary hover:text-white hover:border-primary"
                                     >
                                         <Eye className="w-4 h-4" />

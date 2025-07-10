@@ -9,7 +9,6 @@ import { lazy, Suspense } from 'react';
 const ResourceTimelineCalendar = lazy(() => import("~/components/calendar/CustomCalendar"));
 
 const CalendarPage = () => {
-    // Aircraft resources (exclude null active_status)
     const aircraftResources = aircraftResponse
         .filter(aircraft => aircraft.active_status !== null)
         .map((aircraft, index) => {
@@ -24,7 +23,6 @@ const CalendarPage = () => {
             }
         });
 
-    // Get unique instructors who have bookings and exist in instructorResponse
     const uniqueInstructors = [...new Set(bookingResponse.bookings.map(booking => booking.instructor_id))];
 
     const instructorResources = uniqueInstructors
@@ -41,7 +39,6 @@ const CalendarPage = () => {
 
     const resources = [...aircraftResources, ...instructorResources];
 
-    // Helper function to get user names from user_id array
     const getUserNames = (userIds: string[]) => {
         return userIds.map(userId => {
             const user = bookingResponse.memberNames.find(member => member.user_id === userId);
@@ -49,7 +46,6 @@ const CalendarPage = () => {
         }).join(', ');
     };
 
-    // Generate random colors for events
     const eventColors = [
         '#3b82f6', '#ef4444', '#22c55e', '#f59e0b', '#8b5cf6',
         '#06b6d4', '#f97316', '#84cc16', '#ec4899', '#6366f1'
@@ -73,13 +69,11 @@ const CalendarPage = () => {
     }> = [];
 
     const getBookingTypeCode = (type: string) => {
-        // Find the key (short code) by value (booking type)
         for (const [key, value] of Object.entries(BookingTypes)) {
             if (value === type) {
                 return key;
             }
         }
-        // Return the original type if no match found
         return type;
     };
 
@@ -127,7 +121,6 @@ const CalendarPage = () => {
             }
         });
 
-        // Instructor event (only if instructor exists in instructorResponse)
         const instructorExists = instructorResponse.find(inst => inst.user_id === booking.instructor_id);
         if (instructorExists) {
             allEvents.push({

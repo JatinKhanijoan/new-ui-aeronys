@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  useNavigation,
 } from "react-router";
 
 import type { Route } from "./+types/root";
@@ -15,6 +16,8 @@ import { DashboardForProvider } from "./provider/DashboardForProvider";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import { AppSidebar } from "./components/layout/app-sidebar";
 import { Header } from "./components/layout/header";
+import { Skeleton } from "~/components/ui/skeleton";
+import { cn } from "~/lib/utils";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -29,7 +32,44 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+function LoadingSkeleton() {
+  return (
+    <div className="flex-1 p-6 space-y-6">
+      {/* Header skeleton */}
+      <div className="space-y-2">
+        <Skeleton className="h-8 w-[200px]" />
+        <Skeleton className="h-4 w-[300px]" />
+      </div>
+
+      {/* Content skeleton */}
+      <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="space-y-3">
+              <Skeleton className="h-[200px] w-full rounded-lg" />
+              <div className="space-y-2">
+                <Skeleton className="h-4 w-full" />
+                <Skeleton className="h-4 w-[80%]" />
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Additional content skeleton */}
+        <div className="space-y-3">
+          <Skeleton className="h-4 w-full" />
+          <Skeleton className="h-4 w-[90%]" />
+          <Skeleton className="h-4 w-[75%]" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export function Layout({ children }: { children: React.ReactNode }) {
+  const navigation = useNavigation();
+  const isLoading = navigation.state === "loading";
+
   return (
     <html lang="en" className="h-full light">
       <head>
@@ -61,7 +101,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
                     <div className="flex flex-col min-h-screen w-full">
                       <Header />
                       <div className="flex flex-1 min-h-0">
-                        {children}
+                        <div
+                          className={cn(
+                            "flex-1 transition-opacity duration-200",
+                            isLoading && "opacity-50"
+                          )}
+                        >
+                          {isLoading ? <LoadingSkeleton /> : children}
+                        </div>
                       </div>
                     </div>
                   </SidebarInset>
