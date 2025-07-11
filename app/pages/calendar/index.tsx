@@ -144,10 +144,10 @@ const CalendarPage = () => {
 
     return (
         <div className="container mx-auto p-6 h-[200vh]">
-            <PageTitle
+            {/* <PageTitle
                 title="Calendar"
                 description="View and manage flight schedules."
-            />
+            /> */}
             <Suspense fallback={<div></div>}>
                 <ResourceTimelineCalendar
                     resources={resources}

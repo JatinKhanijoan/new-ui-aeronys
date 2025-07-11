@@ -174,62 +174,70 @@ const ResourceTimelineCalendar: React.FC<ResourceTimelineCalendarProps> = ({
     return (
         <div>
             <div className="w-full h-full">
-                <div className="flex items-center justify-end gap-2 mb-1 p-4">
-                    <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
-                        <PopoverTrigger asChild>
-                            <Button
-                                variant="outline"
-                                className={cn(
-                                    "w-[280px] justify-start text-left font-normal",
-                                    !selectedDate && "text-muted-foreground"
-                                )}
-                            >
-                                <CalendarIcon className="mr-2 h-4 w-4" />
-                                {selectedDate ? (
-                                    <span>
-                                        {formatUTCDateForDisplay(selectedDate)}
-                                        <span className="ml-2 text-xs text-gray-500"></span>
-                                    </span>
-                                ) : (
-                                    <span>Pick a date</span>
-                                )}
-                            </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
-                            <div className="p-3 border-b">
-                                <div className="text-sm font-medium text-center">
-                                    Select Date
+                <div className='flex items-center justify-between'>
+                    <div className="mb-8">
+                        <h1 className="text-3xl font-bold mb-2">Calendar</h1>
+                        <p className="text-muted-foreground">
+                            View and manage your bookings and events.
+                        </p>
+                    </div>
+                    <div className="flex items-center justify-end gap-2 mb-1 p-4">
+                        <Popover open={datePickerOpen} onOpenChange={setDatePickerOpen}>
+                            <PopoverTrigger asChild>
+                                <Button
+                                    variant="outline"
+                                    className={cn(
+                                        "w-[280px] justify-start text-left font-normal",
+                                        !selectedDate && "text-muted-foreground"
+                                    )}
+                                >
+                                    <CalendarIcon className="mr-2 h-4 w-4" />
+                                    {selectedDate ? (
+                                        <span>
+                                            {formatUTCDateForDisplay(selectedDate)}
+                                            <span className="ml-2 text-xs text-gray-500"></span>
+                                        </span>
+                                    ) : (
+                                        <span>Pick a date</span>
+                                    )}
+                                </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="w-auto p-0" align="start">
+                                <div className="p-3 border-b">
+                                    <div className="text-sm font-medium text-center">
+                                        Select Date
+                                    </div>
                                 </div>
-                            </div>
-                            <Calendar
-                                mode="single"
-                                selected={selectedDate}
-                                onSelect={handleDateSelect}
-                                initialFocus
-                                defaultMonth={selectedDate}
-                                modifiers={{
-                                    selected: (date: Date) => {
-                                        if (!selectedDate) return false;
-                                        return isSameUTCDate(dateToUTC(date), selectedDate);
-                                    }
-                                }}
-                                modifiersStyles={{
-                                    selected: {
-                                        backgroundColor: 'hsl(var(--primary))',
-                                        color: 'hsl(var(--primary-foreground))'
-                                    }
-                                }}
-                            />
-                        </PopoverContent>
-                    </Popover>
+                                <Calendar
+                                    mode="single"
+                                    selected={selectedDate}
+                                    onSelect={handleDateSelect}
+                                    initialFocus
+                                    defaultMonth={selectedDate}
+                                    modifiers={{
+                                        selected: (date: Date) => {
+                                            if (!selectedDate) return false;
+                                            return isSameUTCDate(dateToUTC(date), selectedDate);
+                                        }
+                                    }}
+                                    modifiersStyles={{
+                                        selected: {
+                                            backgroundColor: 'hsl(var(--primary))',
+                                            color: 'hsl(var(--primary-foreground))'
+                                        }
+                                    }}
+                                />
+                            </PopoverContent>
+                        </Popover>
 
-                    <Button
-                        variant="default"
-                        onClick={handleTodayClick}
-                        className=""
-                    >
-                        Today
-                    </Button>
+                        <Button
+                            variant="default"
+                            onClick={handleTodayClick}
+                            className=""
+                        >
+                            Today
+                        </Button>
+                    </div>
                 </div>
 
                 <div className="p-4">

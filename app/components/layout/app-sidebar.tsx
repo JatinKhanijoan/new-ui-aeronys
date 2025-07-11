@@ -58,11 +58,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         path: "/organisation/billing",
                         isActive: location.pathname === "/organisation/billing",
                     },
-                    {
-                        title: "Logs",
-                        path: "/organisation/logs",
-                        isActive: location.pathname === "/organisation/logs",
-                    }
                 ],
             },
             {
@@ -135,8 +130,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 items: [
                     {
                         title: "View Records",
-                        path: "/training-records/view",
-                        isActive: location.pathname === "/training-records/view",
+                        path: "/training-records",
+                        isActive: location.pathname === "/training-records",
                     },
                     {
                         title: "Pending Requests",

@@ -18,8 +18,18 @@ export default [
         route("billing", "pages/organisation/billing.tsx"),
         route("rates", "pages/organisation/rates.tsx"),
     ]),
-    route("/invoicing", "pages/invoicing/layout.tsx", [
-        index("pages/invoicing/index.tsx"),
-        route(":invoice_id", "pages/invoicing/invoice.tsx"),
+    route("/courses", "pages/courses/layout.tsx", [
+        index("pages/courses/index.tsx"),
+        route(":course_id", "pages/courses/CourseById.tsx"),
     ]),
+    route("/training-records", "pages/training-records/layout.tsx", [
+        index("pages/training-records/index.tsx"),
+    ]),
+    route("/maintenance", "pages/maintenance/layout.tsx", [
+        index("pages/maintenance/index.tsx"),
+    ]),
+    route("/coupon", "pages/coupon/layout.tsx", [
+        index("pages/coupon/index.tsx"),
+    ]),
+
 ] satisfies RouteConfig;
