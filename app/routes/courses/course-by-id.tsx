@@ -198,35 +198,35 @@ const courseData = {
 const getRequirementTypeIcon = (type: string) => {
     switch (type.toLowerCase()) {
         case 'medical':
-            return <AlertCircle className="h-4 w-4" />;
+            return <AlertCircle className="h-4 w-4 text-yellow-300" />;
         case 'exam':
-            return <FileText className="h-4 w-4" />;
+            return <FileText className="h-4 w-4 text-blue-300" />;
         case 'exercises':
-            return <CheckCircle className="h-4 w-4" />;
+            return <CheckCircle className="h-4 w-4 text-green-300" />;
         case 'hours':
-            return <Clock className="h-4 w-4" />;
+            return <Clock className="h-4 w-4 text-orange-300" />;
         default:
-            return <CheckCircle className="h-4 w-4" />;
+            return <CheckCircle className="h-4 w-4 text-gray-300" />;
     }
 };
 
 const getRequirementTypeColor = (type: string) => {
     switch (type.toLowerCase()) {
         case 'medical':
-            return 'bg-yellow-100 text-yellow-800 border-yellow-200';
+            return 'text-yellow-300';
         case 'exam':
-            return 'bg-blue-100 text-blue-800 border-blue-200';
+            return 'text-blue-300';
         case 'exercises':
-            return 'bg-green-100 text-green-800 border-green-200';
+            return 'text-green-300';
         case 'hours':
-            return 'bg-orange-100 text-orange-800 border-orange-200';
+            return 'text-orange-300';
         default:
-            return 'bg-gray-100 text-gray-800 border-gray-200';
+            return 'text-gray-300';
     }
 };
 
 export default function PPLCourseDashboard() {
-    const [selectedTab, setSelectedTab] = useState('overview');
+    const [selectedTab, setSelectedTab] = useState('exercises');
 
     return (
         <div className="min-h-screen p-4 md:p-6 lg:p-8">
@@ -235,11 +235,11 @@ export default function PPLCourseDashboard() {
                 <div className="text-center space-y-2">
                     <div className="flex items-center justify-center gap-2 mb-4">
                         <Plane className="h-8 w-8 text-primary" />
-                        <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                        <h1 className="text-3xl md:text-4xl font-bold">
                             {courseData.name}
                         </h1>
                     </div>
-                    <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                    <p className="text-base max-w-3xl mx-auto">
                         {courseData.description}
                     </p>
                 </div>
@@ -248,7 +248,7 @@ export default function PPLCourseDashboard() {
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Total Exercises</CardTitle>
-                            <CheckCircle className="h-4 w-4 text-green-600" />
+                            <CheckCircle className="h-4 w-4 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{courseData.exercises.length}</div>
@@ -261,7 +261,7 @@ export default function PPLCourseDashboard() {
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Ground School</CardTitle>
-                            <BookOpen className="h-4 w-4 text-blue-600" />
+                            <BookOpen className="h-4 w-4 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{courseData.ground_school.length}</div>
@@ -274,7 +274,7 @@ export default function PPLCourseDashboard() {
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Examinations</CardTitle>
-                            <FileText className="h-4 w-4 text-purple-600" />
+                            <FileText className="h-4 w-4 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{courseData.exams.length}</div>
@@ -287,7 +287,7 @@ export default function PPLCourseDashboard() {
                     <Card>
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                             <CardTitle className="text-sm font-medium">Requirements</CardTitle>
-                            <Award className="h-4 w-4 text-orange-600" />
+                            <Award className="h-4 w-4 text-primary" />
                         </CardHeader>
                         <CardContent>
                             <div className="text-2xl font-bold">{courseData.requirements.length}</div>
@@ -328,14 +328,14 @@ export default function PPLCourseDashboard() {
                                             </AccordionTrigger>
                                             <AccordionContent>
                                                 <div className="space-y-3">
-                                                    <p className="text-sm text-gray-600">{exercise.description}</p>
+                                                    <p className="text-sm">{exercise.description}</p>
                                                     {exercise.subtasks.length > 0 && (
                                                         <div>
                                                             <h4 className="font-medium mb-2">Subtasks:</h4>
                                                             <ul className="space-y-1">
                                                                 {exercise.subtasks.map((subtask) => (
                                                                     <li key={subtask.subtask_id} className="flex items-center gap-2 text-sm">
-                                                                        <CheckCircle className="h-3 w-3 text-green-600" />
+                                                                        <CheckCircle className="h-3 w-3 text-primary" />
                                                                         {subtask.description}
                                                                     </li>
                                                                 ))}
@@ -406,20 +406,20 @@ export default function PPLCourseDashboard() {
                                     {courseData.requirements.map((requirement) => (
                                         <div key={requirement.requirement_id} className="space-y-3">
                                             <div className="flex items-center gap-2">
-                                                <Badge variant="default" className="text-sm">
+                                                <Badge variant="outline" className="text-sm">
                                                     {requirement.name}
                                                 </Badge>
                                             </div>
-                                            <p className="text-sm text-gray-600">{requirement.description}</p>
+                                            <p className="text-sm">{requirement.description}</p>
                                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
                                                 {requirement.requirement_items.map((item) => (
                                                     <div
                                                         key={item.requirementitem_id}
-                                                        className={`p-3 rounded-lg border ${getRequirementTypeColor(item.type)}`}
+                                                        className={`p-3 rounded-lg border`}
                                                     >
                                                         <div className="flex items-center gap-2 mb-1">
                                                             {getRequirementTypeIcon(item.type)}
-                                                            <span className="font-medium text-sm">{item.type}</span>
+                                                            <span className={`font-medium text-sm ${getRequirementTypeColor(item.type)}`}>{item.type}</span>
                                                         </div>
                                                         <p className="text-sm">{item.description}</p>
                                                     </div>

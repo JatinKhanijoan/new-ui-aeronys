@@ -68,8 +68,8 @@ export default function ViewSingleInvoice() {
         return (
             <div className="container mx-auto p-6">
                 <div className="text-center">
-                    <h1 className="text-2xl font-bold text-gray-900">Invoice Not Found</h1>
-                    <p className="text-gray-600">The invoice with ID {invoice_id} was not found.</p>
+                    <h1 className="text-2xl font-bold">Invoice Not Found</h1>
+                    <p className="text-base">The invoice with ID {invoice_id} was not found.</p>
                 </div>
             </div>
         );
@@ -105,13 +105,13 @@ export default function ViewSingleInvoice() {
 
     const getPaymentStatusBadge = (status: boolean) => {
         return status ? (
-            <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+            <Badge variant='default'>
                 <CheckCircle className="w-4 h-4 mr-2" />
                 Paid
             </Badge>
         ) : (
-            <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-200">
-                <XCircle className="w-4 h-4 mr-2" />
+            <Badge variant="destructive">
+                <XCircle className="w-4 h-4 mr-1" />
                 Unpaid
             </Badge>
         );
@@ -131,8 +131,8 @@ export default function ViewSingleInvoice() {
             <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-4">
                     <div>
-                        <h1 className="text-2xl font-bold text-gray-900">Invoice Details</h1>
-                        <p className="text-gray-600">Invoice #{invoice.invoice_id}</p>
+                        <h1 className="text-2xl font-bold">Invoice Details</h1>
+                        <p className="text-base">Invoice #{invoice.invoice_id}</p>
                     </div>
                 </div>
                 <div className="flex items-center gap-2">
@@ -167,7 +167,7 @@ export default function ViewSingleInvoice() {
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <Calendar className="w-4 h-4" />
                                 Creation Date
                             </div>
@@ -176,7 +176,7 @@ export default function ViewSingleInvoice() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <CreditCard className="w-4 h-4" />
                                 Payment Method
                             </div>
@@ -185,7 +185,7 @@ export default function ViewSingleInvoice() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <CheckCircle className="w-4 h-4" />
                                 Payment Status
                             </div>
@@ -194,7 +194,7 @@ export default function ViewSingleInvoice() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <DollarSign className="w-4 h-4" />
                                 Total Amount
                             </div>
@@ -217,7 +217,7 @@ export default function ViewSingleInvoice() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-4">
                             <div className="space-y-2">
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <div className="flex items-center gap-2 text-sm">
                                     <Building className="w-4 h-4" />
                                     Service Type
                                 </div>
@@ -226,7 +226,7 @@ export default function ViewSingleInvoice() {
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <div className="flex items-center gap-2 text-sm">
                                     <Clock className="w-4 h-4" />
                                     Flight Hours
                                 </div>
@@ -235,7 +235,7 @@ export default function ViewSingleInvoice() {
                                 </div>
                             </div>
                             <div className="space-y-2">
-                                <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <div className="flex items-center gap-2 text-sm">
                                     <MapPin className="w-4 h-4" />
                                     Airport
                                 </div>
@@ -247,19 +247,19 @@ export default function ViewSingleInvoice() {
                         <div className="space-y-4">
                             {invoice.item_name && (
                                 <div className="space-y-2">
-                                    <div className="text-sm text-gray-600">Item Name</div>
+                                    <div className="text-sm">Item Name</div>
                                     <div className="font-semibold">{invoice.item_name}</div>
                                 </div>
                             )}
                             {invoice.item_description && (
                                 <div className="space-y-2">
-                                    <div className="text-sm text-gray-600">Description</div>
+                                    <div className="text-sm">Description</div>
                                     <div className="font-semibold">{invoice.item_description}</div>
                                 </div>
                             )}
                             {(invoice.home_airport || invoice.away_airport) && (
                                 <div className="space-y-2">
-                                    <div className="text-sm text-gray-600">Route</div>
+                                    <div className="text-sm">Route</div>
                                     <div className="font-semibold">
                                         {invoice.home_airport} → {invoice.away_airport}
                                     </div>
@@ -280,15 +280,15 @@ export default function ViewSingleInvoice() {
                 <CardContent>
                     <div className="space-y-3">
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Instructor Charge</span>
+                            <span>Instructor Charge</span>
                             <span className="font-semibold">{formatCurrency(invoice?.instructor_charge || 0)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Flight Rate</span>
+                            <span>Flight Rate</span>
                             <span className="font-semibold">{formatCurrency(invoice?.flight_rate || 0)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600 flex items-center gap-2">
+                            <span className="flex items-center gap-2">
                                 <Fuel className="w-4 h-4" />
                                 Fuel Surcharge
                             </span>
@@ -296,29 +296,29 @@ export default function ViewSingleInvoice() {
                         </div>
                         {invoice.home_airport_charges && (
                             <div className="flex justify-between items-center">
-                                <span className="text-gray-600">Home Airport Charges</span>
+                                <span>Home Airport Charges</span>
                                 <span className="font-semibold">{formatCurrency(Number(invoice.home_airport_charges))}</span>
                             </div>
                         )}
                         {invoice.away_airport_charges && (
                             <div className="flex justify-between items-center">
-                                <span className="text-gray-600">Away Airport Charges</span>
+                                <span>Away Airport Charges</span>
                                 <span className="font-semibold">{formatCurrency(Number(invoice.away_airport_charges))}</span>
                             </div>
                         )}
                         {invoice.markup_price && (
                             <div className="flex justify-between items-center">
-                                <span className="text-gray-600">Markup</span>
+                                <span>Markup</span>
                                 <span className="font-semibold">{formatCurrency(Number(invoice.markup_price))}</span>
                             </div>
                         )}
                         <Separator />
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">Subtotal (Without VAT)</span>
+                            <span>Subtotal (Without VAT)</span>
                             <span className="font-semibold">{formatCurrency(invoice.total_without_vat)}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                            <span className="text-gray-600">VAT Applied</span>
+                            <span>VAT Applied</span>
                             <span className="font-semibold">{formatCurrency(invoice.vat_applied)}</span>
                         </div>
                         <Separator />
@@ -340,7 +340,7 @@ export default function ViewSingleInvoice() {
                 <CardContent>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <Send className="w-4 h-4" />
                                 Sent Date
                             </div>
@@ -352,7 +352,7 @@ export default function ViewSingleInvoice() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <PenTool className="w-4 h-4" />
                                 Signed Date
                             </div>
@@ -364,7 +364,7 @@ export default function ViewSingleInvoice() {
                             </div>
                         </div>
                         <div className="space-y-2">
-                            <div className="flex items-center gap-2 text-sm text-gray-600">
+                            <div className="flex items-center gap-2 text-sm">
                                 <CreditCard className="w-4 h-4" />
                                 Transaction ID
                             </div>

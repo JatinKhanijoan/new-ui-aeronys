@@ -330,25 +330,21 @@ const ViewMaintenance = () => {
         <div className="min-h-screen">
             <div>
                 {/* Header Section */}
-                <div className="flex flex-col sm:flex-row sm:items-center mb-6 gap-4">
-
-
-                    <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-                        <div className="relative flex-1 sm:flex-initial">
-                            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-                            <Input
-                                placeholder="Search aircraft..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value || '')}
-                                className="pl-10 w-full sm:w-64 lg:w-96"
-                            />
-                        </div>
-                        <Button className="w-full sm:w-auto">
-                            <Calendar className="mr-2" size={16} />
-                            <span className="hidden sm:inline">Schedule Maintenance</span>
-                            <span className="sm:hidden">Schedule</span>
-                        </Button>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
+                    <div className="relative w-full sm:w-auto">
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                        <Input
+                            placeholder="Search aircraft..."
+                            value={searchTerm}
+                            onChange={(e) => setSearchTerm(e.target.value || '')}
+                            className="pl-10 w-full sm:w-64 lg:w-96"
+                        />
                     </div>
+                    <Button className="w-full sm:w-auto">
+                        <Calendar className="mr-2" size={16} />
+                        <span className="hidden sm:inline">Schedule Maintenance</span>
+                        <span className="sm:hidden">Schedule</span>
+                    </Button>
                 </div>
 
                 {/* Mobile Card View */}
@@ -555,7 +551,7 @@ const ViewMaintenance = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

@@ -89,12 +89,12 @@ export default function ViewInvoices({ invoices }: ViewInvoicesProps) {
 
     const getPaymentStatusBadge = (status: boolean) => {
         return status ? (
-            <Badge className="bg-green-100 text-green-800 hover:bg-green-200">
+            <Badge className="bg-green-100 text-green-800">
                 <CheckCircle className="w-3 h-3 mr-1" />
                 Paid
             </Badge>
         ) : (
-            <Badge variant="destructive" className="bg-red-100 text-red-800 hover:bg-red-200">
+            <Badge variant="destructive">
                 <XCircle className="w-3 h-3 mr-1" />
                 Unpaid
             </Badge>
@@ -163,7 +163,6 @@ export default function ViewInvoices({ invoices }: ViewInvoicesProps) {
                         {currentInvoices.map((invoice: InvoiceProps, index: number) => (
                             <TableRow
                                 key={invoice.invoice_id}
-                                className="hover:bg-gray-50 transition-colors"
                             >
                                 <TableCell className="pl-6">
                                     <div className="font-medium">

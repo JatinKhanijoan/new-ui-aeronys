@@ -18,8 +18,8 @@ const CourseHours = ({ data }: { data: CourseHoursProps | null }) => {
                         <Clock className="h-5 w-5 text-primary" />
                     </div>
                     <div className="flex-1">
-                        <CardTitle className="text-xl font-bold text-slate-800">Course Hours</CardTitle>
-                        <p className="text-sm text-slate-600 mt-1">
+                        <CardTitle className="text-xl font-bold">Course Hours</CardTitle>
+                        <p className="text-sm mt-1">
                             (All values are in HH:mm format)
                         </p>
                     </div>
@@ -29,49 +29,49 @@ const CourseHours = ({ data }: { data: CourseHoursProps | null }) => {
                 {data ? (
                     <>
                         <div className="overflow-x-auto mb-4">
-                            <table className="w-full text-sm border-collapse border border-slate-300">
+                            <table className="w-full text-sm border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50">
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Dual</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Solo</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Nav</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Inst</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Day</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Night</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">SEP</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">MEP</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">SSAT</th>
+                                    <tr className='bg-primary/10'>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Dual</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Solo</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Nav</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Inst</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Day</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Night</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">SEP</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">MEP</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">SSAT</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="bg-white">
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.dual_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.solo_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.navigation_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.instruments_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.day_time_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.night_time_hours || '0')}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.sep_hours || '0')}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.mep_hours || '0')}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.ssat_hours || '0')}</td>
+                                    <tr>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.dual_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.solo_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.navigation_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.instruments_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.day_time_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.night_time_hours || '0')}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.sep_hours || '0')}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.mep_hours || '0')}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.ssat_hours || '0')}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div className="overflow-x-auto">
-                            <table className="w-full text-sm border-collapse border border-slate-300">
+                            <table className="w-full text-sm border-collapse border border-secondary">
                                 <thead>
-                                    <tr className="bg-slate-50">
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Nav Total</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Nav Solo</th>
-                                        <th className="border border-slate-300 px-4 py-2 text-left font-medium">Nav Dual</th>
+                                    <tr className="bg-primary/10">
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Nav Total</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Nav Solo</th>
+                                        <th className="border border-secondary px-4 py-2 text-left font-medium">Nav Dual</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="bg-white">
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.navigation_total_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.navigation_solo_hours)}</td>
-                                        <td className="border border-slate-300 px-4 py-2">{convertMinutesToHHmm(data.navigation_dual_hours)}</td>
+                                    <tr>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.navigation_total_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.navigation_solo_hours)}</td>
+                                        <td className="border border-secondary px-4 py-2">{convertMinutesToHHmm(data.navigation_dual_hours)}</td>
                                     </tr>
                                 </tbody>
                             </table>

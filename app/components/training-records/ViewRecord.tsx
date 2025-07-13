@@ -7594,7 +7594,7 @@ export const ViewRecord = ({ email_id, profile_image_url, course_id, first_name,
             <div className="mx-auto">
                 <div className="flex flex-row gap-36">
                     {role === 'member' ? (
-                        <h6 className="text-lg flex items-center mb-4 text-gray-800">
+                        <h6 className="text-lg flex items-center mb-4">
                             <UserCircle className="h-6 w-6 mr-2 text-primary" />
                             {first_name} {last_name}
                         </h6>
@@ -7656,7 +7656,7 @@ export const ViewRecord = ({ email_id, profile_image_url, course_id, first_name,
                         </div>
                     </div>
                 ) : (
-                    <div className="text-gray-600">
+                    <div>
                         {course_id.length > 0
                             ? "Please select a course to view details."
                             : "No course data available. Please check course enrollments."}

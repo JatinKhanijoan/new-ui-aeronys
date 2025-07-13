@@ -26,7 +26,7 @@ const AircraftCard: React.FC<AircraftCardProps> = ({ aircraft, onClick }) => {
                         <p className="text-sm text-muted-foreground">{aircraft.type}</p>
                     </div>
                 </div>
-                <Badge variant={aircraft.active_status ? 'outline' : 'destructive'} className={`${aircraft.active_status ? 'border border-green-500 text-green-500' : 'border border-red-500 text-red-500'} bg-transparent`}>
+                <Badge variant={aircraft.active_status ? 'outline' : 'outline'} className={`${aircraft.active_status ? 'border border-green-500 text-green-500' : 'border border-red-500 text-red-500'} bg-transparent`}>
                     {aircraft.active_status ? 'Active' : 'Inactive'}
                 </Badge>
             </CardHeader>

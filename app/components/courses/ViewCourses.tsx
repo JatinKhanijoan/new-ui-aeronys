@@ -52,7 +52,7 @@ export default function ViewCourses() {
                     {courses.map((course) => (
                         <Card
                             key={course.course_id}
-                            className="group hover:shadow-lg transition-all duration-300 cursor-pointer border-gray-200 hover:border-primary flex flex-col h-full"
+                            className="group hover:shadow-lg transition-all duration-300 cursor-pointer hover:border-primary flex flex-col h-full"
                             onClick={() => handleCourseClick(course.course_id)}
                             role="button"
                             tabIndex={0}
@@ -64,11 +64,11 @@ export default function ViewCourses() {
                                 }
                             }}
                         >
-                            <CardHeader className="">
+                            <CardHeader>
                                 <div className="flex items-start justify-between">
                                     <div className="flex items-center gap-3">
                                         {getCourseIcon(course.name)}
-                                        <CardTitle className="text-lg font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                                        <CardTitle className="text-lg font-semibold group-hover:text-primary transition-colors">
                                             {course.name}
                                         </CardTitle>
                                     </div>
@@ -78,17 +78,17 @@ export default function ViewCourses() {
                                 </div>
                             </CardHeader>
                             <CardContent className="flex-1">
-                                <CardDescription className="text-gray-600 leading-relaxed">
+                                <CardDescription className="leading-relaxed">
                                     {course.description}
                                 </CardDescription>
                             </CardContent>
                             <CardFooter className="mt-auto">
-                                <div className="pt-4 w-full border-t border-gray-100">
+                                <div className="pt-2 w-full">
                                     <div className="flex items-center justify-between">
-                                        <span className="text-sm text-gray-500 font-medium">
+                                        <span className="text-sm font-medium group-hover:text-primary transition-colors">
                                             View Details
                                         </span>
-                                        <div className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors">
+                                        <div className="w-5 h-5 group-hover:text-primary transition-colors">
                                             <svg className="w-full h-full" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                                             </svg>

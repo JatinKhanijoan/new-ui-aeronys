@@ -38,8 +38,8 @@ const TrainingHistory = ({
                         <BookOpen className="h-5 w-5 text-primary" />
                     </div>
                     <div>
-                        <CardTitle className="text-xl font-bold text-slate-800">Training History</CardTitle>
-                        <p className="text-sm text-slate-600 mt-1">
+                        <CardTitle className="text-xl font-bold">Training History</CardTitle>
+                        <p className="text-sm mt-1">
                             {noDataAvailable ? 'No records found' :
                                 `${(data?.length || 0) + (legacyData?.length || 0)} training records`}
                         </p>
@@ -50,29 +50,28 @@ const TrainingHistory = ({
             <CardContent>
                 {noDataAvailable ? (
                     <div className="flex flex-col items-center justify-center py-12 text-center">
-                        <div className="p-4 bg-slate-200 rounded-full mb-4">
-                            <Clock className="h-8 w-8 text-slate-500" />
+                        <div className="p-4 rounded-full mb-4">
+                            <Clock className="h-8 w-8" />
                         </div>
-                        <h3 className="text-lg font-semibold text-slate-700 mb-2">No Training History</h3>
-                        <p className="text-slate-500 max-w-md">
+                        <h3 className="text-lg font-semibold mb-2">No Training History</h3>
+                        <p className="max-w-md">
                             Training records will appear here once lessons are scheduled and completed.
                         </p>
                     </div>
                 ) : (
                     <div className="space-y-3">
-                        {/* Regular training records */}
                         {Array.isArray(data) && data
                             .sort((a, b) => new Date(b.trainingRecordDate).getTime() - new Date(a.trainingRecordDate).getTime())
                             .map((record, index) => (
                                 <div
                                     key={`data-${index}`}
-                                    className="group p-4 bg-white rounded-lg border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer"
+                                    className="group p-4 rounded-lg border hover:border-primary hover:shadow-md transition-all duration-200 cursor-pointer"
                                     onClick={() => navigate(`/trainingrecord/record/${record.trainingRecordId}`)}
                                 >
                                     <div className="flex items-start justify-between">
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <h4 className="font-semibold text-slate-800 truncate group-hover:text-blue-700 transition-colors">
+                                                <h4 className="font-semibold truncate group-hover:text-primary transition-colors">
                                                     {record.exerciseName}
                                                 </h4>
                                                 <Badge
@@ -101,7 +100,6 @@ const TrainingHistory = ({
                                 </div>
                             ))}
 
-                        {/* Legacy training records */}
                         {Array.isArray(legacyData) && legacyData
                             .sort((a, b) => {
                                 const dateA = a.date.split('/').reverse().join('-');
@@ -111,7 +109,7 @@ const TrainingHistory = ({
                             .map((record, index) => (
                                 <div
                                     key={`legacy-${index}`}
-                                    className="group p-4 bg-white rounded-lg border border-slate-200 hover:border-blue-300 hover:shadow-md transition-all duration-200 cursor-pointer relative"
+                                    className="group p-4 rounded-lg border hover:border-primary hover:shadow-md transition-all duration-200 cursor-pointer relative"
                                     onClick={() => navigate(`/trainingrecord/record/legacy/${index}`, {
                                         state: { data: record }
                                     })}
@@ -126,7 +124,7 @@ const TrainingHistory = ({
                                     <div className="flex items-start justify-between pr-16">
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 mb-2">
-                                                <h4 className="font-semibold text-slate-800 group-hover:text-blue-700 transition-colors">
+                                                <h4 className="font-semibold group-hover:text-primary transition-colors">
                                                     {record.exercises?.join(', ') || 'Exercise'}
                                                 </h4>
                                                 <Badge
@@ -140,7 +138,7 @@ const TrainingHistory = ({
                                                 </Badge>
                                             </div>
 
-                                            <div className="flex items-center gap-4 text-sm text-slate-600">
+                                            <div className="flex items-center gap-4 text-sm">
                                                 <div className="flex items-center gap-1">
                                                     <User className="h-4 w-4" />
                                                     <span>{record.instructor}</span>

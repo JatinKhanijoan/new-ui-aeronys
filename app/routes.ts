@@ -1,35 +1,62 @@
 import { type RouteConfig, index, route } from "@react-router/dev/routes";
 
 export default [
+    // Home route
     index("routes/home.tsx"),
-    route("/aircraft", "pages/aircraft/layout.tsx", [
-        index("pages/aircraft/index.tsx"),
-        route("new", "pages/aircraft/newAircraft.tsx"),
+
+    // Aircraft routes with proper nesting
+    route("/aircraft", "routes/aircraft/layout.tsx", [
+        index("routes/aircraft/index.tsx"),
+        route("new", "routes/aircraft/new-aircraft.tsx"),
+        route("defects", "routes/aircraft/defects.tsx"),
+        route(":defect_id", "routes/aircraft/defect-by-id.tsx"),
     ]),
-    route("/profile", "pages/profile/index.tsx"),
-    route("/calendar", "pages/calendar/index.tsx"),
-    route("/booking", "pages/booking/layout.tsx", [
-        index("pages/booking/index.tsx"),
-        route("new", "pages/booking/newBooking.tsx"),
+
+    // Profile route
+    route("/profile", "routes/profile/index.tsx"),
+
+    // Calendar route
+    route("/calendar", "routes/calendar/index.tsx"),
+
+    // Booking routes
+    route("/booking", "routes/booking/layout.tsx", [
+        index("routes/booking/index.tsx"),
+        route("new", "routes/booking/new-booking.tsx"),
     ]),
-    route("/organisation", "pages/organisation/layout.tsx", [
-        index("pages/organisation/index.tsx"),
-        route("settings", "pages/organisation/settings.tsx"),
-        route("billing", "pages/organisation/billing.tsx"),
-        route("rates", "pages/organisation/rates.tsx"),
+
+    // Organisation routes
+    route("/organisation", "routes/organisation/layout.tsx", [
+        index("routes/organisation/index.tsx"),
+        route("settings", "routes/organisation/settings.tsx"),
+        route("billing", "routes/organisation/billing.tsx"),
+        route("rates", "routes/organisation/rates.tsx"),
     ]),
-    route("/courses", "pages/courses/layout.tsx", [
-        index("pages/courses/index.tsx"),
-        route(":course_id", "pages/courses/CourseById.tsx"),
+
+    // Courses routes
+    route("/courses", "routes/courses/layout.tsx", [
+        index("routes/courses/index.tsx"),
+        route(":course_id", "routes/courses/course-by-id.tsx"),
     ]),
-    route("/training-records", "pages/training-records/layout.tsx", [
-        index("pages/training-records/index.tsx"),
+
+    // Training records routes
+    route("/training-records", "routes/training-records/layout.tsx", [
+        index("routes/training-records/index.tsx"),
     ]),
-    route("/maintenance", "pages/maintenance/layout.tsx", [
-        index("pages/maintenance/index.tsx"),
+
+    // Invoices routes
+    route("/invoicing", "routes/invoicing/layout.tsx", [
+        index("routes/invoicing/index.tsx"),
+        route(":invoice_id", "routes/invoicing/invoice.tsx"),
     ]),
-    route("/coupon", "pages/coupon/layout.tsx", [
-        index("pages/coupon/index.tsx"),
+
+    // Maintenance routes
+    route("/maintenance", "routes/maintenance/layout.tsx", [
+        index("routes/maintenance/index.tsx"),
+    ]),
+
+    // Coupon routes
+    route("/coupon", "routes/coupon/layout.tsx", [
+        index("routes/coupon/index.tsx"),
     ]),
 
 ] satisfies RouteConfig;

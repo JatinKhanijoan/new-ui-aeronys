@@ -179,7 +179,7 @@ const ViewCoupons: React.FC = () => {
                                             {coupon.is_active ? 'Active' : 'Inactive'}
                                         </span>
                                     </CardTitle>
-                                    <p className="text-sm text-gray-600 mt-1">{coupon.purpose}</p>
+                                    <p className="text-sm mt-1">{coupon.purpose}</p>
                                 </div>
                                 <Button
                                     onClick={() => copyToClipboard(coupon.code)}

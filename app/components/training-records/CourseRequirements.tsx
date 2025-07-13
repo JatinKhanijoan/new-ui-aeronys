@@ -19,7 +19,7 @@ const RequirementSection = ({
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                     <div>
-                        <h3 className="text-lg font-semibold text-slate-800">{name}</h3>
+                        <h3 className="text-lg font-semibold">{name}</h3>
                     </div>
                 </div>
             </div>
@@ -123,8 +123,8 @@ const CourseRequirements: React.FC<CourseRequirementsProps & { requiredItems: Re
                         <ClipboardList className="h-5 w-5 text-primary" />
                     </div>
                     <div className="flex-1">
-                        <CardTitle className="text-xl font-bold text-slate-800">Course Requirements</CardTitle>
-                        <p className="text-sm text-slate-600 mt-1">
+                        <CardTitle className="text-xl font-bold">Course Requirements</CardTitle>
+                        <p className="text-sm mt-1">
                             {completedRequirements} of {totalRequirements} requirements completed
                         </p>
                     </div>

@@ -83,11 +83,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         path: "/booking/new",
                         isActive: location.pathname === "/booking/new",
                     },
-                    {
-                        title: "Pending Requests",
-                        path: "/booking/pending",
-                        isActive: location.pathname === "/booking/pending",
-                    }
+                    // {
+                    //     title: "Pending Requests",
+                    //     path: "/booking/pending",
+                    //     isActive: location.pathname === "/booking/pending",
+                    // }
                 ],
             },
             {
@@ -133,11 +133,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                         path: "/training-records",
                         isActive: location.pathname === "/training-records",
                     },
-                    {
-                        title: "Pending Requests",
-                        path: "/training-records/pending",
-                        isActive: location.pathname === "/training-records/pending",
-                    }
+                    // {
+                    //     title: "Pending Requests",
+                    //     path: "/training-records/pending",
+                    //     isActive: location.pathname === "/training-records/pending",
+                    // }
                 ],
             },
             {
@@ -148,14 +148,14 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 items: [
                     {
                         title: "Invoices",
-                        path: "/invoicing/invoices",
-                        isActive: location.pathname === "/invoicing/invoices",
+                        path: "/invoicing",
+                        isActive: location.pathname === "/invoicing",
                     },
-                    {
-                        title: "Pending Requests",
-                        path: "/invoicing/pending",
-                        isActive: location.pathname === "/invoicing/pending",
-                    }
+                    // {
+                    //     title: "Pending Requests",
+                    //     path: "/invoicing/pending",
+                    //     isActive: location.pathname === "/invoicing/pending",
+                    // }
                 ],
             },
             {
@@ -206,7 +206,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <div className="flex items-start gap-3 mt-1">
-                            <div className={cn("w-10 h-10 bg-gradient-to-br from-primary to-purple-600 rounded-lg flex items-center justify-center",
+                            <div className={cn("w-10 h-10 bg-primary rounded-lg flex items-center justify-center",
                                 state === "collapsed" && "translate-x-1",
                             )}>
                                 <Plane className="w-5 h-5 text-white" />
