@@ -1,6 +1,19 @@
+dist
+dist-ssr
+*.local
+.react-router
+/.cache
+/build
+.react-router
+/node_modules
+/.pnp
+.pnp.js
+/coverage
 .DS_Store
-/node_modules/
-
-# React Router
-/.react-router/
-/build/
+*.pem
+npm-debug.log*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

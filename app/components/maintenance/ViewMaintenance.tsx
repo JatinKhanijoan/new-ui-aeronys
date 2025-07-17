@@ -3,10 +3,9 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { Badge } from '~/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '~/components/ui/card';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '~/components/ui/table';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '~/components/ui/tooltip';
 import { Calendar, Clock, AlertTriangle, Search, AlertCircle, CheckCircle } from 'lucide-react';
-import { format, parseISO, differenceInDays } from 'date-fns';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
 
 const response = {
     "message": "Records fetched successfully",
@@ -191,8 +190,8 @@ interface MaintenanceRecord {
 const safeParseDate = (dateString: string | null | undefined): Date | null => {
     if (!dateString || typeof dateString !== 'string') return null;
     try {
-        const parsed = parseISO(dateString);
-        return isNaN(parsed.getTime()) ? null : parsed;
+        const date = new Date(dateString);
+        return isNaN(date.getTime()) ? null : date;
     } catch {
         return null;
     }
@@ -209,7 +208,8 @@ const getStatusFromDate = (dateString: string | null): { status: string; daysRem
     if (!date) return { status: 'danger', daysRemaining: null };
 
     const today = new Date();
-    const daysRemaining = differenceInDays(date, today);
+    const timeDifference = date.getTime() - today.getTime();
+    const daysRemaining = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
     if (daysRemaining > 10) return { status: 'success', daysRemaining };
     if (daysRemaining > 3) return { status: 'warning', daysRemaining };
@@ -241,13 +241,13 @@ const StatusIndicator = ({ status, value, type }: { status: string; value: strin
     let tooltipText = '';
 
     if (status === 'danger') {
-        icon = <AlertCircle className="text-red-500 ml-1 sm:ml-2 flex-shrink-0" size={16} />;
+        icon = <AlertCircle className="text-red-500 ml-1 flex-shrink-0" size={14} />;
         tooltipText = type === 'date' ? 'Less than 3 days remaining' : 'Less than 5 hours remaining';
     } else if (status === 'warning') {
-        icon = <AlertTriangle className="text-yellow-500 ml-1 sm:ml-2 flex-shrink-0" size={16} />;
+        icon = <AlertTriangle className="text-yellow-500 ml-1 flex-shrink-0" size={14} />;
         tooltipText = type === 'date' ? 'Less than 10 days remaining' : 'Less than 10 hours remaining';
     } else {
-        icon = <CheckCircle className="text-green-500 ml-1 sm:ml-2 flex-shrink-0" size={16} />;
+        icon = <CheckCircle className="text-green-500 ml-1 flex-shrink-0" size={14} />;
         tooltipText = type === 'date' ? 'More than 10 days remaining' : 'More than 10 hours remaining';
     }
 
@@ -256,12 +256,12 @@ const StatusIndicator = ({ status, value, type }: { status: string; value: strin
             <Tooltip>
                 <TooltipTrigger asChild>
                     <div className="flex items-center justify-start min-w-0 cursor-help">
-                        <span className="truncate text-xs sm:text-sm">{value || 'Not set'}</span>
+                        <span className="truncate text-xs">{value || 'Not set'}</span>
                         {icon}
                     </div>
                 </TooltipTrigger>
                 <TooltipContent>
-                    <p>{tooltipText}</p>
+                    <p className="text-xs">{tooltipText}</p>
                 </TooltipContent>
             </Tooltip>
         </TooltipProvider>
@@ -279,13 +279,13 @@ const formatCheckType = (checkType: string | null): string => {
     if (!checkType) return 'Unknown';
     switch (checkType) {
         case '5':
-            return '5 days check';
+            return '5 days';
         case '10':
-            return '10 days check';
+            return '10 days';
         case 'A':
-            return 'Annual check';
+            return 'Annual';
         default:
-            return '5 hours check';
+            return '5 hours';
     }
 };
 
@@ -293,7 +293,11 @@ const formatDate = (dateString: string | null): string => {
     const date = safeParseDate(dateString);
     if (!date) return 'Not set';
     try {
-        return format(date, 'dd MMM yyyy');
+        return date.toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric'
+        });
     } catch {
         return 'Invalid date';
     }
@@ -304,7 +308,6 @@ const ViewMaintenance = () => {
     const [searchTerm, setSearchTerm] = useState<string>('');
 
     useEffect(() => {
-        // Transform the data to match the expected structure
         const transformedData = response.data.map(record => ({
             ...record,
             aircraft: record.aircrafts
@@ -327,37 +330,37 @@ const ViewMaintenance = () => {
     });
 
     return (
-        <div className="min-h-screen">
-            <div>
+        <div className="w-full max-w-full min-h-screen p-2 sm:p-4 md:p-6 overflow-x-hidden">
+            <div className="w-full max-w-none">
                 {/* Header Section */}
-                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4">
-                    <div className="relative w-full sm:w-auto">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 sm:mb-6 gap-3 sm:gap-4">
+                    <div className="relative w-full sm:w-auto sm:max-w-md">
                         <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
                         <Input
                             placeholder="Search aircraft..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value || '')}
-                            className="pl-10 w-full sm:w-64 lg:w-96"
+                            className="pl-10 w-full text-sm"
                         />
                     </div>
-                    <Button className="w-full sm:w-auto">
+                    <Button className="w-full sm:w-auto flex-shrink-0 text-sm">
                         <Calendar className="mr-2" size={16} />
                         <span className="hidden sm:inline">Schedule Maintenance</span>
                         <span className="sm:hidden">Schedule</span>
                     </Button>
                 </div>
 
-                {/* Mobile Card View */}
-                <div className="block lg:hidden">
+                {/* Mobile Card View - xs to md */}
+                <div className="block xl:hidden">
                     {filteredData.length === 0 ? (
-                        <Card>
+                        <Card className="w-full">
                             <CardContent className="flex flex-col items-center justify-center py-8">
-                                <AlertTriangle className="text-gray-400 mb-4" size={48} />
-                                <p className="text-gray-500">No maintenance records found</p>
+                                <AlertTriangle className="text-gray-400 mb-4" size={40} />
+                                <p className="text-gray-500 text-sm">No maintenance records found</p>
                             </CardContent>
                         </Card>
                     ) : (
-                        <div className="space-y-4">
+                        <div className="space-y-3 sm:space-y-4">
                             {filteredData.map((record) => {
                                 if (!record) return null;
 
@@ -369,64 +372,58 @@ const ViewMaintenance = () => {
                                 const minutesValue = safeParseInt(record.hours_to_check);
 
                                 return (
-                                    <Card key={record.check_id}>
-                                        <CardHeader>
-                                            <div className="flex justify-between items-start">
-                                                <div>
-                                                    <CardTitle className="text-lg">
+                                    <Card key={record.check_id} className="w-full">
+                                        <CardHeader className="pb-3">
+                                            <div className="flex justify-between items-start gap-2">
+                                                <div className="min-w-0 flex-1">
+                                                    <CardTitle className="text-base sm:text-lg truncate">
                                                         {aircraft?.registration_number || 'Unknown Aircraft'}
                                                     </CardTitle>
-                                                    <p className="text-sm text-gray-600 mt-1">
-                                                        {aircraft?.type?.slice(-4) || 'Unknown Type'}
+                                                    <p className="text-xs sm:text-sm text-gray-600 mt-1 truncate">
+                                                        {aircraft?.type || 'Unknown Type'}
                                                     </p>
                                                 </div>
-                                                <Badge variant={getStatusBadgeVariant(hoursInfo.status)}>
+                                                <Badge variant={getStatusBadgeVariant(hoursInfo.status)} className="text-xs flex-shrink-0">
                                                     {formatCheckType(record.check_type)}
                                                 </Badge>
                                             </div>
                                         </CardHeader>
-                                        <CardContent className="space-y-3">
-                                            <div>
-                                                <span className="font-medium text-gray-700">Defects:</span>
-                                                <span className="ml-2 text-gray-600">{record.defects || 'None'}</span>
+                                        <CardContent className="pt-0 space-y-3">
+                                            <div className="w-full">
+                                                <span className="font-medium text-gray-700 text-sm">Defects:</span>
+                                                <span className="ml-2 text-gray-600 text-sm break-words">{record.defects || 'None'}</span>
                                             </div>
 
-                                            <div>
-                                                <span className="font-medium text-gray-700">Insurance Renewal:</span>
-                                                <div className="mt-1">
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                                <div>
+                                                    <span className="font-medium text-gray-700 text-sm block mb-1">Insurance:</span>
                                                     <StatusIndicator
                                                         status={insuranceInfo.status}
                                                         value={formatDate(record.insurance_renewal)}
                                                         type="date"
                                                     />
                                                 </div>
-                                            </div>
 
-                                            <div>
-                                                <span className="font-medium text-gray-700">Radio License:</span>
-                                                <div className="mt-1">
+                                                <div>
+                                                    <span className="font-medium text-gray-700 text-sm block mb-1">Radio License:</span>
                                                     <StatusIndicator
                                                         status={radioInfo.status}
                                                         value={formatDate(record.radio_licence_renewal)}
                                                         type="date"
                                                     />
                                                 </div>
-                                            </div>
 
-                                            <div>
-                                                <span className="font-medium text-gray-700">ARC Renewal:</span>
-                                                <div className="mt-1">
+                                                <div>
+                                                    <span className="font-medium text-gray-700 text-sm block mb-1">ARC Renewal:</span>
                                                     <StatusIndicator
                                                         status={arcInfo.status}
                                                         value={formatDate(record.arc_renewal)}
                                                         type="date"
                                                     />
                                                 </div>
-                                            </div>
 
-                                            <div>
-                                                <span className="font-medium text-gray-700">Hours to Check:</span>
-                                                <div className="mt-1">
+                                                <div>
+                                                    <span className="font-medium text-gray-700 text-sm block mb-1">Hours to Check:</span>
                                                     <StatusIndicator
                                                         status={hoursInfo.status}
                                                         value={minutesToHoursMinutes(minutesValue)}
@@ -437,12 +434,12 @@ const ViewMaintenance = () => {
 
                                             <div className="grid grid-cols-2 gap-3">
                                                 <div>
-                                                    <span className="font-medium text-gray-700">Last Fuel:</span>
-                                                    <p className="text-gray-600 mt-1">{record.last_fuel || 'Not recorded'}</p>
+                                                    <span className="font-medium text-gray-700 text-sm block">Last Fuel:</span>
+                                                    <p className="text-gray-600 text-sm mt-1">{record.last_fuel || 'Not recorded'}</p>
                                                 </div>
                                                 <div>
-                                                    <span className="font-medium text-gray-700">Last Oil:</span>
-                                                    <p className="text-gray-600 mt-1">{record.last_oil || 'Not recorded'}</p>
+                                                    <span className="font-medium text-gray-700 text-sm block">Last Oil:</span>
+                                                    <p className="text-gray-600 text-sm mt-1">{record.last_oil || 'Not recorded'}</p>
                                                 </div>
                                             </div>
                                         </CardContent>
@@ -453,105 +450,115 @@ const ViewMaintenance = () => {
                     )}
                 </div>
 
-                <div className="hidden lg:block">
-                    <div className="overflow-x-auto">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="font-semibold border-2">Aircraft</TableHead>
-                                    <TableHead className="font-semibold border-2">Defects</TableHead>
-                                    <TableHead className="font-semibold border-2">Insurance Renewal</TableHead>
-                                    <TableHead className="font-semibold border-2">Radio License</TableHead>
-                                    <TableHead className="font-semibold border-2">ARC Renewal</TableHead>
-                                    <TableHead className="font-semibold border-2">Hours to Check</TableHead>
-                                    <TableHead className="font-semibold border-2">Check Type</TableHead>
-                                    <TableHead className="font-semibold border-2">Last Fuel</TableHead>
-                                    <TableHead className="font-semibold border-2">Last Oil</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {filteredData.map((record) => {
-                                    if (!record) return null;
+                <div className="hidden xl:block">
+                    <div className="w-full overflow-x-auto">
+                        <div className="min-w-full">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead className="font-semibold border text-xs min-w-32">Aircraft</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-20">Defects</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-28">Insurance</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-28">Radio License</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-28">ARC Renewal</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-24">Hours to Check</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-20">Check Type</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-20">Last Fuel</TableHead>
+                                        <TableHead className="font-semibold border text-xs min-w-20">Last Oil</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {filteredData.map((record) => {
+                                        if (!record) return null;
 
-                                    const aircraft = record.aircrafts;
-                                    const insuranceInfo = getStatusFromDate(record.insurance_renewal);
-                                    const radioInfo = getStatusFromDate(record.radio_licence_renewal);
-                                    const arcInfo = getStatusFromDate(record.arc_renewal);
-                                    const hoursInfo = getStatusFromHours(record.hours_to_check);
-                                    const minutesValue = safeParseInt(record.hours_to_check);
+                                        const aircraft = record.aircrafts;
+                                        const insuranceInfo = getStatusFromDate(record.insurance_renewal);
+                                        const radioInfo = getStatusFromDate(record.radio_licence_renewal);
+                                        const arcInfo = getStatusFromDate(record.arc_renewal);
+                                        const hoursInfo = getStatusFromHours(record.hours_to_check);
+                                        const minutesValue = safeParseInt(record.hours_to_check);
 
-                                    return (
-                                        <TableRow key={record.check_id}>
-                                            <TableCell className="font-medium border-2">
-                                                {aircraft ? (
-                                                    <>
-                                                        {aircraft.registration_number || 'Unknown'}
-                                                        <span className="text-gray-500 ml-2">
-                                                            ({aircraft.type?.slice(-4) || 'N/A'})
-                                                        </span>
-                                                    </>
-                                                ) : (
-                                                    'No aircraft data'
-                                                )}
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                {record.defects || 'None'}
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                <StatusIndicator
-                                                    status={insuranceInfo.status}
-                                                    value={formatDate(record.insurance_renewal)}
-                                                    type="date"
-                                                />
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                <StatusIndicator
-                                                    status={radioInfo.status}
-                                                    value={formatDate(record.radio_licence_renewal)}
-                                                    type="date"
-                                                />
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                <StatusIndicator
-                                                    status={arcInfo.status}
-                                                    value={formatDate(record.arc_renewal)}
-                                                    type="date"
-                                                />
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                <StatusIndicator
-                                                    status={hoursInfo.status}
-                                                    value={minutesToHoursMinutes(minutesValue)}
-                                                    type="hours"
-                                                />
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                {formatCheckType(record.check_type)}
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                {record.last_fuel || 'Not recorded'}
-                                            </TableCell>
-                                            <TableCell className='border-2'>
-                                                {record.last_oil || 'Not recorded'}
-                                            </TableCell>
-                                        </TableRow>
-                                    );
-                                })}
-                            </TableBody>
-                        </Table>
+                                        return (
+                                            <TableRow key={record.check_id}>
+                                                <TableCell className="font-medium border text-xs p-2">
+                                                    {aircraft ? (
+                                                        <div className="min-w-0">
+                                                            <div className="font-medium truncate">{aircraft.registration_number || 'Unknown'}</div>
+                                                            <div className="text-gray-500 text-xs truncate">
+                                                                ({aircraft.type?.slice(-4) || 'N/A'})
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        'No aircraft data'
+                                                    )}
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <div className="truncate max-w-20">
+                                                        {record.defects || 'None'}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <StatusIndicator
+                                                        status={insuranceInfo.status}
+                                                        value={formatDate(record.insurance_renewal)}
+                                                        type="date"
+                                                    />
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <StatusIndicator
+                                                        status={radioInfo.status}
+                                                        value={formatDate(record.radio_licence_renewal)}
+                                                        type="date"
+                                                    />
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <StatusIndicator
+                                                        status={arcInfo.status}
+                                                        value={formatDate(record.arc_renewal)}
+                                                        type="date"
+                                                    />
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <StatusIndicator
+                                                        status={hoursInfo.status}
+                                                        value={minutesToHoursMinutes(minutesValue)}
+                                                        type="hours"
+                                                    />
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <div className="truncate">
+                                                        {formatCheckType(record.check_type)}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <div className="truncate">
+                                                        {record.last_fuel || 'Not recorded'}
+                                                    </div>
+                                                </TableCell>
+                                                <TableCell className="border text-xs p-2">
+                                                    <div className="truncate">
+                                                        {record.last_oil || 'Not recorded'}
+                                                    </div>
+                                                </TableCell>
+                                            </TableRow>
+                                        );
+                                    })}
+                                </TableBody>
+                            </Table>
+                        </div>
                     </div>
 
                     {filteredData.length === 0 && (
-                        <Card className="mt-4">
+                        <Card className="mt-4 w-full">
                             <CardContent className="flex flex-col items-center justify-center py-8">
-                                <AlertTriangle className="text-gray-400 mb-4" size={48} />
-                                <p className="text-gray-500">No maintenance records found</p>
+                                <AlertTriangle className="text-gray-400 mb-4" size={40} />
+                                <p className="text-gray-500 text-sm">No maintenance records found</p>
                             </CardContent>
                         </Card>
                     )}
                 </div>
             </div>
-        </div >
+        </div>
     );
 };
 

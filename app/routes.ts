@@ -4,6 +4,10 @@ export default [
     // Home route
     index("routes/home.tsx"),
 
+    route("/auth", "routes/auth/layout.tsx", [
+        index("routes/auth/login.tsx"),
+    ]),
+
     // Aircraft routes with proper nesting
     route("/aircraft", "routes/aircraft/layout.tsx", [
         index("routes/aircraft/index.tsx"),

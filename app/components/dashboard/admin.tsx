@@ -33,6 +33,8 @@ import {
     Cell,
     ComposedChart,
 } from 'recharts'
+import { useSelector } from 'react-redux'
+import type { RootState } from '~/store'
 
 interface MainContentProps {
     rightSidebarOpen: boolean
@@ -77,6 +79,8 @@ const AdminDashboard = () => {
     const cn = (...classes: (string | boolean | undefined)[]): string =>
         classes.filter(Boolean).join(' ')
 
+    const first_name = useSelector((state: RootState) => state.user.first_name)
+
     return (
         <div
             className={cn(
@@ -85,7 +89,7 @@ const AdminDashboard = () => {
         >
             <div className="flex p-2 items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight">Welcome back, Admin</h1>
+                    <h1 className="text-2xl font-bold tracking-tight">Welcome back, {first_name}</h1>
                     <p className="text-muted-foreground">Here's what's happening at your flight school today.</p>
                 </div>
                 <div className="flex items-center gap-2">

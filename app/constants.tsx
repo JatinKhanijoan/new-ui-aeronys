@@ -7,3 +7,5 @@ export const aircraft_placeholder = <div className='flex items-center justify-ce
 export const default_avatar = (name: string) => `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random`;
 
 // usage: default_avatar(encodeURIComponent(getUserDisplayName(user)))
+
+export const PERSIST_STORE_NAME = 'aeronys';
